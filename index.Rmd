@@ -44,10 +44,18 @@ populated with the addins exported by this package:
 ![Addins Menu](images/addins-menu.png)
 
 Try using the `insert_in` addin -- you'll see the text ` %in% ` inserted
-at the cursor position. You might be surprised to know that this action
-was coordinated entirely through R code. In fact, the R function that
-made this happen is located [here](https://github.com/rstudio/addinexamples/blob/master/R/insert-in.R),
-and its definition is simply:
+at the cursor position.
+
+
+
+<!-- TODO: Find and Replace demo? -->
+
+### Developing Addins
+
+You might be surprised to know that `insert_in` is implemented entirely with R 
+code. In fact, the R function that made this happen is located
+[here](https://github.com/rstudio/addinexamples/blob/master/R/insert-in.R), and
+its definition is simply:
 
 ```{r, eval=FALSE}
 insert_in <- function() {
@@ -61,9 +69,7 @@ executing the function. This is exactly what RStudio is doing behind the scenes;
 it's just allowing you to execute that function through some UI rather than
 manually writing and executing the function yourself.
 
-<!-- TODO: Find and Replace demo? -->
-
-### Registering Addins
+#### Registering Addins
 
 Since addins are just R functions, how does `addinexamples` let RStudio know
 what functions are safe to call as addins? This is done through the registration
