@@ -1,0 +1,90 @@
+---
+output:
+  html_document:
+    highlight: textmate
+    includes:
+      after_body: includes/after.html
+      before_body: includes/before.html
+      in_header: includes/header.html
+    self_contained: no
+    theme: cosmo
+---
+
+### RStudio Addins
+
+<!-- ![RStudio Addins](img/addins-logo.png) -->
+
+Addins provide a mechanism for executing R functions interactively from within 
+the RStudio IDE -- either through keyboard shortcuts, or through the `Addins` 
+menu. Addins can be as simple as a function that inserts a commonly used snippet
+of text, and as complex as a Shiny application that accepts input from the user,
+and later mutates a document open in RStudio. The sky is the limit!
+
+### Getting Started
+
+Let's start by playing around with a couple of the example addins provided
+by the [addinexamples](https://github.com/rstudio/addinexamples) package.
+Within RStudio, install this package (plus its requisite dependencies) with:
+
+<!-- TODO: Replace this with just 'install.packages()' once 'shinygadgets' -->
+<!-- is on CRAN -->
+
+```{r, eval=FALSE}
+if (!requireNamespace("devtools", quietly = TRUE))
+  install.packages("devtools")
+
+devtools::install_github("rstudio/shiny")
+devtools::install_github("rstudio/shinygadgets")
+devtools::install_github("rstudio/addinexamples")
+```
+
+After installing this package, you should see the `Addins` toolbar menu
+populated with the addins exported by this package:
+
+![Addins Menu](images/addins-menu.png)
+
+Try using the `insert_in` addin -- you'll see the text ` %in% ` inserted
+at the cursor position. You might be surprised to know that this action
+was coordinated entirely through R code. In fact, the R function that
+made this happen is located [here](https://github.com/rstudio/addinexamples/blob/master/R/insert-in.R),
+and its definition is simply:
+
+```{r, eval=FALSE}
+insert_in <- function() {
+  rstudioapi::insertText(" %in% ")
+}
+```
+
+If you want to try something silly, try executing `addinexamples::insert_in()`
+directly at the console. You should also see ` %in% ` inserted immediately after
+executing the function. This is exactly what RStudio is doing behind the scenes;
+it's just allowing you to execute that function through some UI rather than
+manually going through the console.
+
+<!-- TODO: Find and Replace demo? -->
+
+### Registering Addins
+
+Since addins are just R functions, how does `addinexamples` let RStudio know
+what functions are safe to call as addins? This is done through the registration
+file located at [inst/rstudio/addins.dcf](https://github.com/rstudio/addinexamples/blob/master/inst/rstudio/addins.dcf).
+Each addin you register should have the following four fields:
+
+- **Name**: The name of the addin.
+- **Description**: A description of the addin.
+- **Binding**: The R function this addin is associated with.
+- **Interactive**: Whether this addin is interactive (e.g. as a Shiny application).
+
+If you want to create your own RStudio addins, all you need to do is:
+
+1. Create an R package,
+2. Create some R functions, and
+3. Create a file at `inst/rstudio/addins.dcf`,
+
+and RStudio will automatically discover and register these addins when your package
+is installed.
+
+### Get in Touch
+
+Questions? Comments? Suggestions? Please get in touch with us at the
+[support forums](http://support.rstudio.com/).

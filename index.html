@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title></title>
+
+<script src="index_files/jquery-1.11.0/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="index_files/bootstrap-3.3.1/css/cosmo.min.css" rel="stylesheet" />
+<script src="index_files/bootstrap-3.3.1/js/bootstrap.min.js"></script>
+<script src="index_files/bootstrap-3.3.1/shim/html5shiv.min.js"></script>
+<script src="index_files/bootstrap-3.3.1/shim/respond.min.js"></script>
+
+<link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet">
+
+<script src="libs/tocify-1.9.1/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="libs/tocify-1.9.1/jquery.tocify.min.js"></script>
+
+<style type="text/css">
+@media (max-width: 992px) {
+#toc {
+  position: relative;
+  width: 100%;
+  margin: 0px 0px 20px 0px;
+}
+}
+</style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<link rel="stylesheet"
+      href="index_files/highlight/textmate.css"
+      type="text/css" />
+<script src="index_files/highlight/highlight.js"></script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img { 
+  max-width:100%; 
+  height: auto; 
+}
+</style>
+<div class="container-fluid main-container">
+
+
+<div class="row-fluid">
+
+<div class="span3 col-md-3">
+  <div id="toc"></div>
+</div>
+
+<div class="main-content span9 col-md-9">
+
+<style type="text/css">
+body {
+  padding-top: 20px;
+}
+/* offset scroll position for anchor links */
+h3 {
+  padding-top: 25px;
+  margin-top: -25px;
+}
+h4 {
+  padding-top: 25px;
+  margin-top: -25px;
+}
+
+.main-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+.section {
+  margin-bottom: 25px;
+}
+
+.tocify {
+  border: none;
+  background-color: #ECF2F6;
+  margin-top: 10px;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+  background-color: #ECF2F6;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  color: #3676BD;
+}
+
+.tocify .list-group-item.active {
+  color: white;
+  background-color: #428DC8;
+}
+
+.tocify .list-group-item:hover {
+  background-color: #caddec;
+}
+
+.tocify .list-group-item.active:hover {
+  color: white;
+  background-color: #428DC8;
+}
+
+.tocify-subheader {
+  display: inline;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+  padding-left: 12px;
+}
+
+#overview h3 {
+  visibility: hidden;
+  height: 0px;
+}
+
+blockquote {
+  font-size: 1em;
+}
+
+</style>
+
+
+
+<div id="rstudio-addins" class="section level3">
+<h3>RStudio Addins</h3>
+<!-- ![RStudio Addins](img/addins-logo.png) -->
+<p>Addins provide a mechanism for executing R functions interactively from within the RStudio IDE – either through keyboard shortcuts, or through the <code>Addins</code> menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is the limit!</p>
+</div>
+<div id="getting-started" class="section level3">
+<h3>Getting Started</h3>
+<p>Let’s start by playing around with a couple of the example addins provided by the <a href="https://github.com/rstudio/addinexamples">addinexamples</a> package. Within RStudio, install this package (plus its requisite dependencies) with:</p>
+<!-- TODO: Replace this with just 'install.packages()' once 'shinygadgets' -->
+<!-- is on CRAN -->
+<pre class="r"><code>if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE))
+  install.packages(&quot;devtools&quot;)
+
+devtools::install_github(&quot;rstudio/shiny&quot;)
+devtools::install_github(&quot;rstudio/shinygadgets&quot;)
+devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
+<p>After installing this package, you should see the <code>Addins</code> toolbar menu populated with the addins exported by this package:</p>
+<p><img src="images/addins-menu.png" alt="Addins Menu" /></p>
+<p>Try using the <code>insert_in</code> addin – you’ll see the text <code>%in%</code> inserted at the cursor position. You might be surprised to know that this action was coordinated entirely through R code. In fact, the R function that made this happen is located <a href="https://github.com/rstudio/addinexamples/blob/master/R/insert-in.R">here</a>, and its definition is simply:</p>
+<pre class="r"><code>insert_in &lt;- function() {
+  rstudioapi::insertText(&quot; %in% &quot;)
+}</code></pre>
+<p>If you want to try something silly, try executing <code>addinexamples::insert_in()</code> directly at the console. You should also see <code>%in%</code> inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it’s just allowing you to execute that function through some UI rather than manually going through the console.</p>
+<!-- TODO: Find and Replace demo? -->
+</div>
+<div id="registering-addins" class="section level3">
+<h3>Registering Addins</h3>
+<p>Since addins are just R functions, how does <code>addinexamples</code> let RStudio know what functions are safe to call as addins? This is done through the registration file located at <a href="https://github.com/rstudio/addinexamples/blob/master/inst/rstudio/addins.dcf">inst/rstudio/addins.dcf</a>. Each addin you register should have the following four fields:</p>
+<ul>
+<li><strong>Name</strong>: The name of the addin.</li>
+<li><strong>Description</strong>: A description of the addin.</li>
+<li><strong>Binding</strong>: The R function this addin is associated with.</li>
+<li><strong>Interactive</strong>: Whether this addin is interactive (e.g. as a Shiny application).</li>
+</ul>
+<p>If you want to create your own RStudio addins, all you need to do is:</p>
+<ol style="list-style-type: decimal">
+<li>Create an R package,</li>
+<li>Create some R functions, and</li>
+<li>Create a file at <code>inst/rstudio/addins.dcf</code>,</li>
+</ol>
+<p>and RStudio will automatically discover and register these addins when your package is installed.</p>
+</div>
+<div id="get-in-touch" class="section level3">
+<h3>Get in Touch</h3>
+<p>Questions? Comments? Suggestions? Please get in touch with us at the <a href="http://support.rstudio.com/">support forums</a>.</p>
+</div>
+
+
+</div> <!--span-9-->
+</div> <!--row-fluid-->
+
+<style type="text/css">
+.main-container {
+  max-width: none;
+}
+</style>
+
+<script>
+$(function() {
+    var toc = $("#toc").tocify({
+      selectors: "h3,h4",
+      theme: "bootstrap3",
+      context: '.main-content',
+      hashGenerator: 'pretty',
+      showAndHide: false
+    }).data("toc-tocify");
+    $(".optionName").popover({ trigger: "hover" });
+});
+</script>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+$(document).ready(function () {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+});
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
