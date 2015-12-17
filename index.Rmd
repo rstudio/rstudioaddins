@@ -59,7 +59,7 @@ If you want to try something silly, try executing `addinexamples::insert_in()`
 directly at the console. You should also see ` %in% ` inserted immediately after
 executing the function. This is exactly what RStudio is doing behind the scenes;
 it's just allowing you to execute that function through some UI rather than
-manually going through the console.
+manually writing and executing the function yourself.
 
 <!-- TODO: Find and Replace demo? -->
 
