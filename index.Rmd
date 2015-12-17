@@ -18,10 +18,11 @@ Addins provide a mechanism for executing R functions interactively from within t
 
 The sky is limit for addins! For example:
 
-- Example 1
-- Example 2
-- Example 3
-- Example 4
+- Interactively subset a dataset
+[![Subset Demo](demo/demo-subset.png)](demo/demo-subset.gif)
+
+- Interactively reformat R code
+[![Reformat Demo](demo/demo-reformat.png)](demo/demo-reformat.gif)
 
 This guide walks you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.
 
@@ -50,11 +51,9 @@ After installing this package, you should see the `Addins` toolbar menu populate
 
 ![Addins Menu](images/addins-menu.png)
 
-Try clicking the `insert_in` addin -- you'll see the text ` %in% ` inserted at the cursor position.
+Try clicking the **Insert %in%** addin -- you'll see the text ` %in% ` inserted at the cursor position.
 
 This is a simple addin, but we can also build interactive Shiny applications to be launched as addins. For example, datasets can be subsetted interactively using the **Subsetter** addin -- click the following image for a quick demo.
-
-[![Subsetter Demo](demo/demo-subset.png)](demo/demo-subset.gif)
 
 ### Keyboard Shorcuts
 
