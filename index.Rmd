@@ -90,7 +90,7 @@ There are two major types of addins:
 
 More details on both types of addin are provided below, but first we'll take a look at using the [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package to interact with the IDE as well the requirements for registering addins.
 
-### Using the RStudio API
+### RStudio API
 
 TODO: describe general capabiliites and philosophy of the API
 
@@ -159,7 +159,7 @@ This should serve as a very simple introduction to shiny gadgets such that folks
 
 Perhaps show a single example and then link to the source code of other examples.
 
-<div class="footer">
+<div class="doc-footer">
 
 Questions? Comments? Suggestions? Please get in touch with us at the [support forums](http://support.rstudio.com/)
 
