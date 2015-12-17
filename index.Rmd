@@ -12,17 +12,24 @@ output:
 
 ## Overview
 
-<div class="header">RStudio Addins</div>
+<div class="doc-header">RStudio Addins</div>
 
-Addins provide a mechanism for executing R functions interactively from within the RStudio IDE--either through keyboard shortcuts, or through the `Addins` menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is the limit!
+Addins provide a mechanism for executing R functions interactively from within the RStudio IDE---either through keyboard shortcuts, or through the `Addins` menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. 
 
-<!--
-NOTE: I scrapped the "Discovering Addins" section. Rather than that let's just link to a few cool addins right here once they materialize.
--->
+The sky is limit for addins! For example:
+
+- Example 1
+- Example 2
+- Example 3
+- Example 4
+
+This guide walks you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.
 
 ## Using Addins
 
 ### Installation
+
+RStudio Addins are distributed and installed from within standard R packages. Once you've installed an R package that contains addins they'll be immediately available within the IDE.
 
 Let's start by playing around with a couple of the example addins provided by the [addinexamples](https://github.com/rstudio/addinexamples) package. Within RStudio, install this package (plus its requisite dependencies) with:
 
@@ -34,6 +41,8 @@ devtools::install_github("rstudio/shiny")
 devtools::install_github("rstudio/shinygadgets")
 devtools::install_github("rstudio/addinexamples")
 ```
+
+Note that for the time being the **addinexamples** package requires development versions of two other packages so be sure to install those as well!
 
 ### Executing Addins
 
@@ -83,11 +92,26 @@ More details on both types of addin are provided below, but first we'll take a l
 
 ### Using the RStudio API
 
-TODO: describe general capabiliites of the API
-- getActiveDocumentContext()
-- insertText()
-- replaceRanges()
-- setDocumentContents()
+TODO: describe general capabiliites and philosophy of the API
+
+| Function  | Description |
+|---|---|
+| `getActiveDocumentContext()` | Returns information about the currently active RStudio document (see below for details) |
+| `insertText(location, text, id = NULL)` | Insert text at specific location within a document. |
+| `modifyRange(location, text, id = NULL)` | Modify (replace) the contents of a specific location within document. |
+| `setDocumentContents(text, id = NULL)` | Replace the entire contents of a document. |
+
+The list returned from `getActiveDocumentContext()` provides the following information about the active RStudio document:
+
+- *id* --- The unique document id.
+- *path* --- The path to the document on disk.
+- *contents* --- The contents of the document.
+- *selection* --- A list of selections. 
+
+The `id` can be passed to other functions within the API to address a specific document instance rather than the currently active document. Even though it's optional it's highly recommended that you use the `id` parameter to ensure that you modify the document that was active when your addin was invoked.
+
+The `location` argument to several of the API functions specifies a position or range to operate on. See the [rstudioapi manual](https://cran.r-project.org/web/packages/rstudioapi/rstudioapi.pdf) for more details on specifying locations.
+
 
 ### Registering Addins
 
@@ -98,8 +122,14 @@ Since addins are just R functions, how does `addinexamples` let RStudio know wha
 - **Binding**: The R function this addin is associated with.
 - **Interactive**: Whether this addin is interactive (e.g. as a Shiny application).
 
-(TODO: we should show an example of exactly what the DCF file will look like here)
+For example:
 
+```dcf
+Name: Insert %in%
+Description: Inserts `%in%` at the cursor position.
+Binding: insert_in
+Interactive: false
+```
 
 If you want to create your own RStudio addins, all you need to do is:
 
@@ -113,7 +143,7 @@ RStudio will automatically discover and register these addins when your package 
 
 Describe the basic use case for non-interactive addins (text insertion or transformation), emphasize the requirement of registering them with Interactive: false and describe the implications of this (nothing emitted to the console, executed in the background, can *never* hang, etc.)
 
-Perhaps show a couple of other examples.
+Perhaps show or link to the source code for a couple of other examples.
 
 
 ### Shiny Gadgets
@@ -126,6 +156,8 @@ Here we'd have a whole top level section on developing addins with shiny gadgets
 - Links to source code for shiny gadgets in our addinexamples package
 
 This should serve as a very simple introduction to shiny gadgets such that folks can see the concept and it's application but should defer to the shinygadgets docs for more in depth topics.
+
+Perhaps show a single example and then link to the source code of other examples.
 
 <div class="footer">
 

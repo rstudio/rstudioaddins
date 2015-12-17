@@ -148,7 +148,7 @@ h4 {
   padding-left: 12px;
 }
 
-.header {
+.doc-header {
   font-size: 39px;
 }
 
@@ -167,10 +167,16 @@ blockquote {
 
 <div id="overview" class="section level2">
 <h2>Overview</h2>
-<div class="header">
+<div class="doc-header">
 RStudio Addins
 </div>
-<p>Addins provide a mechanism for executing R functions interactively from within the RStudio IDE–either through keyboard shortcuts, or through the <code>Addins</code> menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is the limit!</p>
+<p>Addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <code>Addins</code> menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. Some examples of addins which could be created:</p>
+<ul>
+<li>Example 1</li>
+<li>Example 2</li>
+<li>Example 3</li>
+<li>Example 4</li>
+</ul>
 <!--
 NOTE: I scrapped the "Discovering Addins" section. Rather than that let's just link to a few cool addins right here once they materialize.
 -->
@@ -179,6 +185,7 @@ NOTE: I scrapped the "Discovering Addins" section. Rather than that let's just l
 <h2>Using Addins</h2>
 <div id="installation" class="section level3">
 <h3>Installation</h3>
+<p>RStudio Addins are distributed and installed from within standard R packages. Once you’ve installed an R package that contains addins they’ll be immediately available within the IDE.</p>
 <p>Let’s start by playing around with a couple of the example addins provided by the <a href="https://github.com/rstudio/addinexamples">addinexamples</a> package. Within RStudio, install this package (plus its requisite dependencies) with:</p>
 <pre class="r"><code>if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE))
   install.packages(&quot;devtools&quot;)
@@ -186,6 +193,7 @@ NOTE: I scrapped the "Discovering Addins" section. Rather than that let's just l
 devtools::install_github(&quot;rstudio/shiny&quot;)
 devtools::install_github(&quot;rstudio/shinygadgets&quot;)
 devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
+<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of two other packages so be sure to install those as well!</p>
 </div>
 <div id="executing-addins" class="section level3">
 <h3>Executing Addins</h3>
@@ -222,7 +230,42 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 </div>
 <div id="using-the-rstudio-api" class="section level3">
 <h3>Using the RStudio API</h3>
-<p>TODO: describe general capabiliites of the API - getActiveDocumentContext() - insertText() - replaceRanges() - setDocumentContents()</p>
+<p>TODO: describe general capabiliites and philosophy of the API</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Function</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>getActiveDocumentContext()</code></td>
+<td align="left">Returns information about the currently active RStudio document (see below for details)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>insertText(location, text, id = NULL)</code></td>
+<td align="left">Insert text at specific location within a document.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>modifyRange(location, text, id = NULL)</code></td>
+<td align="left">Modify (replace) the contents of a specific location within document.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>setDocumentContents(text, id = NULL)</code></td>
+<td align="left">Replace the entire contents of a document.</td>
+</tr>
+</tbody>
+</table>
+<p>The list returned from <code>getActiveDocumentContext()</code> provides the following information about the active RStudio document:</p>
+<ul>
+<li><em>id</em> — The unique document id.</li>
+<li><em>path</em> — The path to the document on disk.</li>
+<li><em>contents</em> — The contents of the document.</li>
+<li><em>selection</em> — A list of selections.</li>
+</ul>
+<p>The <code>id</code> can be passed to other functions within the API to address a specific document instance rather than the currently active document. Even though it’s optional it’s highly recommended that you use the <code>id</code> parameter to ensure that you modify the document that was active when your addin was invoked.</p>
+<p>The <code>location</code> argument to several of the API functions specifies a position or range to operate on. See the <a href="https://cran.r-project.org/web/packages/rstudioapi/rstudioapi.pdf">rstudioapi manual</a> for more details on specifying locations.</p>
 </div>
 <div id="registering-addins" class="section level3">
 <h3>Registering Addins</h3>
@@ -233,7 +276,11 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <li><strong>Binding</strong>: The R function this addin is associated with.</li>
 <li><strong>Interactive</strong>: Whether this addin is interactive (e.g. as a Shiny application).</li>
 </ul>
-<p>(TODO: we should show an example of exactly what the DCF file will look like here)</p>
+<p>For example:</p>
+<pre class="dcf"><code>Name: Insert %in%
+Description: Inserts `%in%` at the cursor position.
+Binding: insert_in
+Interactive: false</code></pre>
 <p>If you want to create your own RStudio addins, all you need to do is:</p>
 <ol style="list-style-type: decimal">
 <li>Create an R package,</li>
@@ -245,7 +292,7 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <div id="text-macros" class="section level3">
 <h3>Text Macros</h3>
 <p>Describe the basic use case for non-interactive addins (text insertion or transformation), emphasize the requirement of registering them with Interactive: false and describe the implications of this (nothing emitted to the console, executed in the background, can <em>never</em> hang, etc.)</p>
-<p>Perhaps show a couple of other examples.</p>
+<p>Perhaps show or link to the source code for a couple of other examples.</p>
 </div>
 <div id="shiny-gadgets" class="section level3">
 <h3>Shiny Gadgets</h3>
@@ -257,6 +304,7 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <li>Links to source code for shiny gadgets in our addinexamples package</li>
 </ul>
 <p>This should serve as a very simple introduction to shiny gadgets such that folks can see the concept and it’s application but should defer to the shinygadgets docs for more in depth topics.</p>
+<p>Perhaps show a single example and then link to the source code of other examples.</p>
 <div class="footer">
 <p>Questions? Comments? Suggestions? Please get in touch with us at the <a href="http://support.rstudio.com/">support forums</a></p>
 </div>
