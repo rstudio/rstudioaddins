@@ -14,9 +14,13 @@ output:
 
 <div class="doc-header">RStudio Addins</div>
 
-Addins provide a mechanism for executing R functions interactively from within the RStudio IDE---either through keyboard shortcuts, or through the `Addins` menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio.
+Addins provide a mechanism for executing R functions interactively from within the RStudio IDE---either through keyboard shortcuts, or through the `Addins` menu.
 
-The sky is limit for addins! For example:
+An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!
+
+---
+
+### Examples
 
 <div class="row">
 
@@ -32,13 +36,15 @@ The sky is limit for addins! For example:
 
 </div>
 
-This guide walks you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.
+---
 
 ## Using Addins
 
+This guide will walk you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.
+
 ### Installation
 
-RStudio Addins are distributed and installed from within standard R packages. Once you've installed an R package that contains addins they'll be immediately available within the IDE.
+RStudio Addins are distributed through [R packages](http://r-pkgs.had.co.nz/). Once you've installed an R package that contains addins, they'll be immediately become available within RStudio.
 
 Let's start by playing around with a couple of the example addins provided by the [addinexamples](https://github.com/rstudio/addinexamples) package. Within RStudio, install this package (plus its requisite dependencies) with:
 
@@ -51,7 +57,7 @@ devtools::install_github("rstudio/shinygadgets")
 devtools::install_github("rstudio/addinexamples")
 ```
 
-Note that for the time being the **addinexamples** package requires development versions of two other packages so be sure to install those as well!
+Note that for the time being the **addinexamples** package requires development versions of `shiny` and `shinygadgets`, so please be sure to install those as well!
 
 ### Executing Addins
 
@@ -59,29 +65,27 @@ After installing this package, you should see the `Addins` toolbar menu populate
 
 ![Addins Menu](images/addins-menu.png)
 
-Try clicking the **Insert %in%** addin -- you'll see the text ` %in% ` inserted at the cursor position.
-
-This is a simple addin, but we can also build interactive Shiny applications to be launched as addins. For example, datasets can be subsetted interactively using the **Subsetter** addin -- click the following image for a quick demo.
+Try clicking the <span class="text-nowrap">**Insert %in%**</span> addin -- you'll see the text ` %in% ` inserted at the cursor position.
 
 ### Keyboard Shorcuts
 
-Of course, it would be preferable to insert ` %in% ` through a keyboard shortcut rather than through clicking through a menu, so let's bind this addin to a keyboard shortcut.
+Of course, it would be preferable to insert ` %in% ` through a keyboard shortcut rather than through clicking through a menu, so let's learn how to bind this addin to a keyboard shortcut.
 
 First, click `Browse Addins...` to explore all of the addins currently available:
 
 ![Browse Addins](images/addins-dialog.png)
 
-At the bottom left of the dialog, you'll see the `Keyboard Shortcuts...` button. Click this, and the `Modify Keyboard Shortcuts` widget will be opened, filtered to the current set of addins. Let's bind `Insert In` to `Ctrl+Alt+Shift+K` -- click on the 'Shortcut' field for the 'Insert In' addin row, and type those keys.
+At the bottom left of the dialog, you'll see the `Keyboard Shortcuts...` button. Click this, and the <span class="text-nowrap">*Modify Keyboard Shortcuts*</span> widget will be opened, filtered to the current set of addins. Let's bind <span class="text-nowrap">**Insert %in%**</span> to `Ctrl + Alt + Shift + K` -- click on the 'Shortcut' field for the 'Insert In' addin row, and type those keys.
 
 ![Keyboard Shortcuts](images/addins-shortcuts.png)
 
-You've now bound this addin to a keyboard shortcut! Try typing `Ctrl+Alt+Shift+K` in the editor, and you'll see ` %in% ` inserted at the cursor position. You can imagine generating a number of these addins yourself for other commonly used code snippets or operators.
+You've now bound this addin to a keyboard shortcut! Try typing `Ctrl + Alt + Shift + K` in the editor, and you'll see ` %in% ` inserted at the cursor position. You can imagine generating a number of these addins yourself for other commonly used code snippets or operators.
 
 ## Developing Addins
 
 ### Addin Basics
 
-You might be surprised to know that `insert_in` is implemented entirely with R code. In fact, the R function that made this happen is located [here](https://github.com/rstudio/addinexamples/blob/master/R/insert-in.R), and its definition is simply:
+You might be surprised to know that the <span class="text-nowrap">**Insert %in%**</span> addin is implemented entirely with R code. In fact, the R function that made this happen is located [here](https://github.com/rstudio/addinexamples/blob/master/R/insertInAddin.R), and its definition is simply:
 
 ```{r, eval=FALSE}
 insert_in <- function() {
@@ -89,26 +93,34 @@ insert_in <- function() {
 }
 ```
 
-If you want to try something silly, try executing `addinexamples::insert_in()` directly at the console. You should also see ` %in% ` inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it's just allowing you to execute that function through some UI rather than manually writing and executing the function yourself.
+If you want to try something silly, try executing `addinexamples::insertInAddin()` directly at the console. You should also see ` %in% ` inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it's just allowing you to execute that function through some UI rather than manually writing and executing the function yourself.
 
 There are two major types of addins:
 
-1. Text Macros, which insert text into the console or source pane and in some cases transform text witin the source pane.
+1. Text Macros, which insert text into the console or source pane and in some cases transform text within the source pane.
 
-2. Shiny Gadgets, which are fully interactive Shiny applications. Gadgets may also do text transformations but they of course capable of much more.
+2. Shiny Gadgets, which are fully interactive Shiny applications. Gadgets may also perform text transformations but they of course capable of much more.
 
-More details on both types of addin are provided below, but first we'll take a look at using the [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package to interact with the IDE as well the requirements for registering addins.
+More details on both types of addin are provided below, but first we'll take a look at using the [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package (which allows us to interact with RStudio from R code), and later what it takes to register an addin.
 
 ### RStudio API
 
-TODO: describe general capabiliites and philosophy of the API
+The [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package allows you to interact with RStudio directly from the R code you write. For addins in particular, a number of methods were added that allow R code to introspect and mutate the contents of a document open in RStudio. These methods are outlined below briefly, but see documentation within the [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package for more details.
 
-| Function  | Description |
-|---|---|
-| `getActiveDocumentContext()` | Returns information about the currently active RStudio document (see below for details) |
-| `insertText(location, text, id = NULL)` | Insert text at specific location within a document. |
-| `modifyRange(location, text, id = NULL)` | Modify (replace) the contents of a specific location within document. |
-| `setDocumentContents(text, id = NULL)` | Replace the entire contents of a document. |
+<table class="table table-striped table-bordered table-hover">
+<tr>
+<td class="text-nowrap">**GetActiveDocumentContext()**</td>
+<td>Returns information about the currently active RStudio document. See below for more details.</td>
+</tr>
+<tr>
+<td class="text-nowrap">**insertText(location, text, id = NULL)**</td>
+<td>Insert text at a specific location within a document.</td>
+</tr>
+<tr>
+<td class="text-nowrap">**setDocumentContext(text, id = NULL)**</td>
+<td>Set the contents of a document open in RStudio.</td>
+</tr>
+</table>
 
 The list returned from `getActiveDocumentContext()` provides the following information about the active RStudio document:
 
@@ -117,7 +129,7 @@ The list returned from `getActiveDocumentContext()` provides the following infor
 - *contents* --- The contents of the document.
 - *selection* --- A list of selections. 
 
-The `id` can be passed to other functions within the API to address a specific document instance rather than the currently active document. Even though it's optional it's highly recommended that you use the `id` parameter to ensure that you modify the document that was active when your addin was invoked.
+The `id` can be passed to other functions within the API to address a specific document instance rather than the currently active document. Even though it's optional, it's highly recommended that you use the `id` parameter to ensure that you modify the document that was active when your addin was invoked.
 
 The `location` argument to several of the API functions specifies a position or range to operate on. See the [rstudioapi manual](https://cran.r-project.org/web/packages/rstudioapi/rstudioapi.pdf) for more details on specifying locations.
 
@@ -148,25 +160,142 @@ If you want to create your own RStudio addins, all you need to do is:
 
 RStudio will automatically discover and register these addins when your package is installed.
 
-### Text Macros
+### Interactive Addins
 
-Describe the basic use case for non-interactive addins (text insertion or transformation), emphasize the requirement of registering them with Interactive: false and describe the implications of this (nothing emitted to the console, executed in the background, can *never* hang, etc.)
-
-Perhaps show or link to the source code for a couple of other examples.
-
+It's important to understand when an addin should be declared as interactive versus non-interactive, as this effects how RStudio will attempt to run the addin. In particular, non-interactive addins **can not be interrupted**, so it's imperative that these addins should complete execution quickly. Otherwise, it's possible that your addin could freeze the user's R session, with no recourse for them to halt execution of your addin!
 
 ### Shiny Gadgets
 
-Here we'd have a whole top level section on developing addins with shiny gadgets. We'd want to cover:
+Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. Let's go through how you might create a Shiny gadget.
 
-- Requirement for "Interactive: true"
-- Basic concept of a shiny gadget + a simple example + links to shiny gadget docs
-- Describe the different viewing options (pane, dialog, external) and their pros and cons.
-- Links to source code for shiny gadgets in our addinexamples package
+Shiny gadgets are similar to regular Shiny applications. You will need to develop a `ui` and a `server` for your gadget, and then use the `runGadget()` function to launch your gadget.
 
-This should serve as a very simple introduction to shiny gadgets such that folks can see the concept and it's application but should defer to the shinygadgets docs for more in depth topics.
+#### UI
 
-Perhaps show a single example and then link to the source code of other examples.
+The UI for a Shiny gadget can be generated using the `gadgetPage()` function. Typically, the UI definition of a Shiny gadget will have the following form:
+
+```{r, eval=FALSE}
+ui <- gadgetPage(
+  titlebar("My Gadget"),
+  contentPanel(
+    ## Your UI items go here.
+  )
+)
+```
+
+If you're unfamiliar with how the UI for a Shiny application can be generated, please check out [Shiny UI Lesson](http://shiny.rstudio.com/tutorial/lesson2/) to get further acquainted with how the UI for a Shiny application might be developed.
+
+#### Server
+
+The server function used for a Shiny gadget is similar to one as provided for a regular Shiny application, except with the requirement that your application must respond to the `done` event. For example,
+
+```{r, eval=FALSE}
+server <- function(input, output, session) {
+  
+  ## Your reactive logic goes here.
+  
+  # Listen for the 'done' event. This event will be fired when a user
+  # is finished interacting with your application, and clicks the 'done'
+  # button.
+  observeEvent(input$done, {
+    
+    # Here is where your Shiny application might now go an affect the
+    # contents of a document open in RStudio, using the `rstudioapi` package.
+    #
+    # At the end, your application should call 'stopApp()' here, to ensure that
+    # the gadget is closed after 'done' is clicked.
+    stopApp()
+  })
+}
+```
+
+#### Viewer
+
+After you've defined the ui and server for your Shiny gadget, you can choose what kind of viewer you would like your application to run in. Currently, there are three options available:
+
+- **paneViewer()**: Launch your Shiny gadget within the RStudio **Viewer** pane. This is useful for gadgets that want to run without obscuring other windows in the RStudio IDE, but such applications should require only a minimal amount of space (as the viewer may be small on the user's computer).
+
+- **dialogViewer()**: Launch your Shiny gadget as a modal dialog within the RStudio IDE. Use this when your gadget requires a large amount of screen real estate, but is not heavy-weight enough to require a separate window.
+
+- **browserViewer()**: Launch your Shiny gdaget in a separate window. Use this for large Shiny gadgets that require a large amount of real estate, and perhaps are more complex than applications that could fit comfortably within an RStudio modal dialog.
+
+#### Putting It Together
+
+Let's combine the above components into a simple 'Hello Shiny' gadget. We'll create a clock that updates its display every second. Try running the following code in RStudio -- you should see a clock displayed in the viewer pane. When you click `Done`, the current time will be inserted at the cursor position.
+
+```{r, eval=FALSE}
+library(shiny)
+library(shinygadgets)
+
+# We'll wrap our Shiny gadget in an addin -- let's call it 'clockAddin()'.
+clockAddin <- function() {
+  
+  # Our ui will be a simple gadget page, which simply displays the
+  # time in a 'UI' output.
+  ui <- gadgetPage(
+    titlebar("Clock"),
+    contentPanel(
+      uiOutput("time")
+    )
+  )
+  
+  server <- function(input, output, session) {
+    
+    # Set some CSS styles for our clock.
+    clockStyles <- paste(
+      "border: 1px solid #DADADA",
+      "background-color: #EFEFEF",
+      "border-radius: 5px",
+      "font-size: 6em",
+      "margin-top: 60px",
+      "text-align: center",
+      sep = "; "
+    )
+    
+    # We'll use a 'reactiveTimer()' to force Shiny
+    # to update and show the clock every second.
+    invalidatePeriodically <- reactiveTimer(intervalMs = 1000)
+    observe({
+      
+      # Call our reactive timer in an 'observe' function to ensure it's
+      # repeatedly fired.
+      invalidatePeriodically()
+      
+      # Get the time, and render it as a large paragraph element.
+      time <- Sys.time()
+      output$time <- renderUI({
+        p(style = clockStyles, time)
+      })
+    })
+    
+    # Listen for 'done' events. When we're finished, we'll insert the current
+    # time, and then stop the gadget.
+    observeEvent(input$done, {
+      timeText <- paste("\"", as.character(Sys.time()), "\"", sep = "")
+      rstudioapi::insertText(timeText)
+      stopApp()
+    })
+    
+  }
+  
+  # We'll use a pane viwer, and set the minimum height at
+  # 300px to ensure we get enough screen space to display the clock.
+  viewer <- paneViewer(300)
+  runGadget(ui, server, viewer = viewer)
+  
+}
+
+# Try running the clock!
+clockAddin()
+
+# Now all that's left is sharing this addin -- put this function in
+# an R package, provide the registration metadata at 
+# 'inst/rstudio/addins.dcf', and you're ready to go!
+```
+
+Congratulations! You're now ready to write your own Shiny gadgets.
+
+<hr />
 
 <div class="doc-footer">
 
