@@ -85,9 +85,12 @@ img {
 <div class="main-content span9 col-md-9">
 
 <style type="text/css">
+
 body {
   padding-top: 20px;
+  min-width: 200px;
 }
+
 /* offset scroll position for anchor links */
 h2 {
   padding-top: 25px;
@@ -176,10 +179,16 @@ RStudio Addins
 </div>
 <p>Addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <code>Addins</code> menu. Addins can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio.</p>
 <p>The sky is limit for addins! For example:</p>
-<ul>
-<li><p>Interactively subset a dataset <a href="demo/demo-subset.gif"><img src="demo/demo-subset.png" alt="Subset Demo" /></a></p></li>
-<li><p>Interactively reformat R code <a href="demo/demo-reformat.gif"><img src="demo/demo-reformat.png" alt="Reformat Demo" /></a></p></li>
-</ul>
+<div class="row">
+<div class="col-xs-6">
+<h4 id="interactively-subset-a-dataset">Interactively subset a dataset</h4>
+<p><a href="demo/demo-subset.gif"><img src="demo/demo-subset.png" alt="Subset Demo" /></a></p>
+</div>
+<div class="col-xs-6">
+<h4 id="interactively-reformat-r-code">Interactively reformat R code</h4>
+<p><a href="demo/demo-reformat.gif"><img src="demo/demo-reformat.png" alt="Reformat Demo" /></a></p>
+</div>
+</div>
 <p>This guide walks you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.</p>
 </div>
 <div id="using-addins" class="section level2">
@@ -232,7 +241,11 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <div id="rstudio-api" class="section level3">
 <h3>RStudio API</h3>
 <p>TODO: describe general capabiliites and philosophy of the API</p>
-<table>
+<table style="width:11%;">
+<colgroup>
+<col width="5%" />
+<col width="5%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left">Function</th>

@@ -18,11 +18,19 @@ Addins provide a mechanism for executing R functions interactively from within t
 
 The sky is limit for addins! For example:
 
-- Interactively subset a dataset
-[![Subset Demo](demo/demo-subset.png)](demo/demo-subset.gif)
+<div class="row">
 
-- Interactively reformat R code
+<div class="col-xs-6">
+#### Interactively subset a dataset
+[![Subset Demo](demo/demo-subset.png)](demo/demo-subset.gif)
+</div>
+
+<div class="col-xs-6">
+#### Interactively reformat R code
 [![Reformat Demo](demo/demo-reformat.png)](demo/demo-reformat.gif)
+</div>
+
+</div>
 
 This guide walks you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.
 
