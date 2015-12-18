@@ -94,7 +94,7 @@ You've now bound this addin to a keyboard shortcut! Try typing `Ctrl + Alt + Shi
 You might be surprised to know that the <span class="text-nowrap">**Insert %in%**</span> addin is implemented entirely with R code. In fact, the R function that made this happen is located [here](https://github.com/rstudio/addinexamples/blob/master/R/insertInAddin.R), and its definition is simply:
 
 ```{r, eval=FALSE}
-insert_in <- function() {
+insertInAddin <- function() {
   rstudioapi::insertText(" %in% ")
 }
 ```
@@ -103,7 +103,7 @@ Try executing `addinexamples::insertInAddin()` directly at the console. You shou
 
 There are two major types of addins:
 
-1. Text macros, which insert text into the console or source pane and in some cases transform text within the source pane. The `insert_in` addin defined above is an example of a text macro.
+1. Text macros, which insert text into the console or source pane and in some cases transform text within the source pane. The `insertInAddin` addin defined above is an example of a text macro.
 
 2. Shiny Gadgets, which are fully interactive Shiny applications. Gadgets may also perform text transformations but they of course capable of much more.
 
@@ -154,7 +154,7 @@ For example:
 ```dcf
 Name: Insert %in%
 Description: Inserts `%in%` at the cursor position.
-Binding: insert_in
+Binding: insertInAddin
 Interactive: false
 ```
 
@@ -171,7 +171,7 @@ RStudio will automatically discover and register these addins when your package 
 
 The `Interactive` field within the addin registration describes whether the addin is interactive or non-interactive. It's important to understand when an addin should be declared as interactive versus non-interactive, as this effects how RStudio will attempt to execute the addin:
 
-- Interactive addins are invoked by emiting a call to their function directly into the R console. For addins that display user-interface (e.g. using a Shiny application) this enables users to stop/interrupt them.
+- Interactive addins are invoked by emitting a call to their function directly into the R console. For addins that display user-interface (e.g. using a Shiny application) this enables users to stop/interrupt them.
 
 - Non-interactive addins are run in the background and **can not be interrupted**, so it's imperative that these addins complete execution quickly. Otherwise, it's possible that your addin could freeze the user's R session.
 
@@ -237,7 +237,7 @@ After you've defined the ui and server for your Shiny gadget, you can choose wha
 
 - **dialogViewer()**: Launch your Shiny Gadget as a modal dialog within the RStudio IDE. Use this when your gadget requires a large amount of screen real estate, but is not heavy-weight enough to require a separate window.
 
-- **browserViewer()**: Launch your Shiny gdaget in a separate window. Use this for large Shiny gadgets that require a large amount of real estate, and perhaps are more complex than applications that could fit comfortably within an RStudio modal dialog.
+- **browserViewer()**: Launch your Shiny gadget in a separate window. Use this for large Shiny gadgets that require a large amount of real estate, and perhaps are more complex than applications that could fit comfortably within an RStudio modal dialog.
 
 ### Putting It Together
 
@@ -247,11 +247,12 @@ Let's combine the above components into a simple 'Hello Shiny' gadget. We'll cre
 library(shiny)
 library(shinygadgets)
 
-# We'll wrap our Shiny Gadget in an addin -- let's call it 'clockAddin()'.
+# We'll wrap our Shiny Gadget in an addin.
+# Let's call it 'clockAddin()'.
 clockAddin <- function() {
   
-  # Our ui will be a simple gadget page, which simply displays the
-  # time in a 'UI' output.
+  # Our ui will be a simple gadget page, which
+  # simply displays the time in a 'UI' output.
   ui <- gadgetPage(
     titlebar("Clock"),
     contentPanel(
@@ -277,8 +278,8 @@ clockAddin <- function() {
     invalidatePeriodically <- reactiveTimer(intervalMs = 1000)
     observe({
       
-      # Call our reactive timer in an 'observe' function to ensure it's
-      # repeatedly fired.
+      # Call our reactive timer in an 'observe' function
+      # to ensure it's repeatedly fired.
       invalidatePeriodically()
       
       # Get the time, and render it as a large paragraph element.
@@ -288,10 +289,10 @@ clockAddin <- function() {
       })
     })
     
-    # Listen for 'done' events. When we're finished, we'll insert the current
-    # time, and then stop the gadget.
+    # Listen for 'done' events. When we're finished, we'll
+    # insert the current time, and then stop the gadget.
     observeEvent(input$done, {
-      timeText <- paste("\"", as.character(Sys.time()), "\"", sep = "")
+      timeText <- paste0("\"", as.character(Sys.time()), "\"")
       rstudioapi::insertText(timeText)
       stopApp()
     })
@@ -308,8 +309,8 @@ clockAddin <- function() {
 # Try running the clock!
 clockAddin()
 
-# Now all that's left is sharing this addin -- put this function in
-# an R package, provide the registration metadata at 
+# Now all that's left is sharing this addin -- put this function
+# in an R package, provide the registration metadata at
 # 'inst/rstudio/addins.dcf', and you're ready to go!
 ```
 
@@ -318,13 +319,13 @@ Congratulations! You're now ready to write your own Shiny gadgets.
 
 ### Installation
 
-Currently, running Shiny Gadgets requires that you install development versions of both the **shiny** and **shinygadgets** packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:
+Currently, running Shiny Gadgets requires that you install development versions of both the [**shiny**](https://github.com/rstudio/shiny) and [**shinygadgets**](https://github.com/rstudio/shinygadgets) packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:
 
 ```{r, eval=FALSE}
 devtools::install_github(c("rstudio/shiny", "rstudio/shinygadgets"))
 ```
 
-Updated versions of the **shiny** and **shinygadgets** packages will be submited to CRAN soon, after which you'll need only declare that your addin package depends on these updated versions.
+Updated versions of the **shiny** and **shinygadgets** packages will be submitted to CRAN soon, after which you'll need only declare that your addin package depends on these updated versions.
 
 ### More Examples
 
