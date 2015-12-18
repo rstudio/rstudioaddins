@@ -189,7 +189,7 @@ RStudio Addins
 <div id="release-note">
 <p><strong>IMPORTANT NOTE:</strong> Support for addins is available only within the <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio (v0.99.825 or later). If you want to try out addins please be sure to download the preview release.</p>
 </div>
-<p>RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <code>Addins</code> menu.</p>
+<p>RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <em>Addins</em> menu.</p>
 <p>An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!</p>
 <hr />
 <div id="examples" class="section level3">
@@ -222,18 +222,19 @@ devtools::install_github(&quot;rstudio/shinygadgets&quot;)
 devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of <strong>shiny</strong> and <strong>shinygadgets</strong>, so please be sure to install those as well!</p>
 </div>
-<div id="executing-addins" class="section level3">
-<h3>Executing Addins</h3>
-<p>After installing this package, you should see the <code>Addins</code> toolbar menu populated with the addins exported by this package:</p>
+<div id="running-addins" class="section level3">
+<h3>Running Addins</h3>
+<p>After installing this package, you should see the <em>Addins</em> toolbar menu populated with the addins exported by this package:</p>
 <p><img src="images/addins-menu.png" alt="Addins Menu" /></p>
 <p>Try clicking the <span class="text-nowrap"><strong>Insert %in%</strong></span> addin – you’ll see the text <code>%in%</code> inserted at the cursor position.</p>
+<p>The <em>Addins</em> menu displays up to 15 addins, if you have more than 15 installed you can access all of them via the <em>Browse Addins…</em> dialog:</p>
+<p><img src="images/addins-dialog.png" alt="Browse Addins" /></p>
 </div>
 <div id="keyboard-shorcuts" class="section level3">
 <h3>Keyboard Shorcuts</h3>
 <p>Of course, it would be preferable to insert <code>%in%</code> through a keyboard shortcut rather than through clicking through a menu, so let’s learn how to bind this addin to a keyboard shortcut.</p>
-<p>First, click <code>Browse Addins...</code> to explore all of the addins currently available:</p>
-<p><img src="images/addins-dialog.png" alt="Browse Addins" /></p>
-<p>At the bottom left of the dialog, you’ll see the <code>Keyboard Shortcuts...</code> button. Click this, and the <span class="text-nowrap"><em>Modify Keyboard Shortcuts</em></span> widget will be opened, filtered to the current set of addins. Let’s bind <span class="text-nowrap"><strong>Insert %in%</strong></span> to <code>Ctrl + Alt + Shift + K</code> – click on the ‘Shortcut’ field for the ‘Insert In’ addin row, and type those keys.</p>
+<p>First, click <em>Browse Addins…</em> to explore all of the addins currently available.</p>
+<p>At the bottom left of the dialog, you’ll see the <em>Keyboard Shortcuts…</em> button. Click this, and the <span class="text-nowrap"><em>Modify Keyboard Shortcuts</em></span> widget will be opened, filtered to the current set of addins. Let’s bind <span class="text-nowrap"><strong>Insert %in%</strong></span> to <code>Ctrl + Alt + Shift + K</code> – click on the ‘Shortcut’ field for the ‘Insert In’ addin row, and type those keys.</p>
 <p><img src="images/addins-shortcuts.png" alt="Keyboard Shortcuts" /></p>
 <p>You’ve now bound this addin to a keyboard shortcut! Try typing <code>Ctrl + Alt + Shift + K</code> in the editor, and you’ll see <code>%in%</code> inserted at the cursor position. You can imagine generating a number of these addins yourself for other commonly used code snippets or operators.</p>
 </div>
@@ -246,13 +247,13 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <pre class="r"><code>insert_in &lt;- function() {
   rstudioapi::insertText(&quot; %in% &quot;)
 }</code></pre>
-<p>If you want to try something silly, try executing <code>addinexamples::insertInAddin()</code> directly at the console. You should also see <code>%in%</code> inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it’s just allowing you to execute that function through some UI rather than manually writing and executing the function yourself.</p>
+<p>Try executing <code>addinexamples::insertInAddin()</code> directly at the console. You should also see <code>%in%</code> inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it’s just allowing you to execute that function through some UI rather than manually writing and executing the function yourself.</p>
 <p>There are two major types of addins:</p>
 <ol style="list-style-type: decimal">
-<li><p>Text Macros, which insert text into the console or source pane and in some cases transform text within the source pane.</p></li>
+<li><p>Text macros, which insert text into the console or source pane and in some cases transform text within the source pane. The <code>insert_in</code> addin defined above is an example of a text macro.</p></li>
 <li><p>Shiny Gadgets, which are fully interactive Shiny applications. Gadgets may also perform text transformations but they of course capable of much more.</p></li>
 </ol>
-<p>More details on both types of addin are provided below, but first we’ll take a look at using the <a href="https://cran.rstudio.com/web/packages/rstudioapi/index.html">rstudioapi</a> package (which allows us to interact with RStudio from R code), and later what it takes to register an addin.</p>
+<p>More details on Shiny Gadgets are provided below, but first we’ll take a look at using the <a href="https://cran.rstudio.com/web/packages/rstudioapi/index.html">rstudioapi</a> package (which allows us to interact with RStudio from R code) and then what it takes to install and register an addin.</p>
 </div>
 <div id="rstudio-api" class="section level3">
 <h3>RStudio API</h3>
@@ -313,7 +314,7 @@ Interactive: false</code></pre>
 <li>Create some R functions, and</li>
 <li>Create a file at <code>inst/rstudio/addins.dcf</code>,</li>
 </ol>
-<p>RStudio will automatically discover and register these addins when your package is installed.</p>
+<p>RStudio will automatically discover and register these addins when your package is installed. Note that you can register as many addins as you like within a single <code>addins.dcf</code> file, just be sure to insert a blank line between each addin that is registered.</p>
 </div>
 <div id="execution-modes" class="section level3">
 <h3>Execution Modes</h3>

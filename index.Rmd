@@ -18,7 +18,7 @@ output:
 **IMPORTANT NOTE:** Support for addins is available only within the [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio (v0.99.825 or later). If you want to try out addins please be sure to download the preview release.
 </div>
 
-RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE---either through keyboard shortcuts, or through the `Addins` menu.
+RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE---either through keyboard shortcuts, or through the *Addins* menu.
 
 An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!
 
@@ -67,23 +67,25 @@ devtools::install_github("rstudio/addinexamples")
 
 Note that for the time being the **addinexamples** package requires development versions of **shiny** and **shinygadgets**, so please be sure to install those as well!
 
-### Executing Addins
+### Running Addins
 
-After installing this package, you should see the `Addins` toolbar menu populated with the addins exported by this package:
+After installing this package, you should see the *Addins* toolbar menu populated with the addins exported by this package:
 
 ![Addins Menu](images/addins-menu.png)
 
 Try clicking the <span class="text-nowrap">**Insert %in%**</span> addin -- you'll see the text ` %in% ` inserted at the cursor position.
 
+The *Addins* menu displays up to 15 addins, if you have more than 15 installed you can access all of them via the *Browse Addins...* dialog:
+
+![Browse Addins](images/addins-dialog.png)
+
 ### Keyboard Shorcuts
 
 Of course, it would be preferable to insert ` %in% ` through a keyboard shortcut rather than through clicking through a menu, so let's learn how to bind this addin to a keyboard shortcut.
 
-First, click `Browse Addins...` to explore all of the addins currently available:
+First, click *Browse Addins...* to explore all of the addins currently available.
 
-![Browse Addins](images/addins-dialog.png)
-
-At the bottom left of the dialog, you'll see the `Keyboard Shortcuts...` button. Click this, and the <span class="text-nowrap">*Modify Keyboard Shortcuts*</span> widget will be opened, filtered to the current set of addins. Let's bind <span class="text-nowrap">**Insert %in%**</span> to `Ctrl + Alt + Shift + K` -- click on the 'Shortcut' field for the 'Insert In' addin row, and type those keys.
+At the bottom left of the dialog, you'll see the *Keyboard Shortcuts...* button. Click this, and the <span class="text-nowrap">*Modify Keyboard Shortcuts*</span> widget will be opened, filtered to the current set of addins. Let's bind <span class="text-nowrap">**Insert %in%**</span> to `Ctrl + Alt + Shift + K` -- click on the 'Shortcut' field for the 'Insert In' addin row, and type those keys.
 
 ![Keyboard Shortcuts](images/addins-shortcuts.png)
 
@@ -101,15 +103,15 @@ insert_in <- function() {
 }
 ```
 
-If you want to try something silly, try executing `addinexamples::insertInAddin()` directly at the console. You should also see ` %in% ` inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it's just allowing you to execute that function through some UI rather than manually writing and executing the function yourself.
+Try executing `addinexamples::insertInAddin()` directly at the console. You should also see ` %in% ` inserted immediately after executing the function. This is exactly what RStudio is doing behind the scenes; it's just allowing you to execute that function through some UI rather than manually writing and executing the function yourself.
 
 There are two major types of addins:
 
-1. Text Macros, which insert text into the console or source pane and in some cases transform text within the source pane.
+1. Text macros, which insert text into the console or source pane and in some cases transform text within the source pane. The `insert_in` addin defined above is an example of a text macro.
 
 2. Shiny Gadgets, which are fully interactive Shiny applications. Gadgets may also perform text transformations but they of course capable of much more.
 
-More details on both types of addin are provided below, but first we'll take a look at using the [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package (which allows us to interact with RStudio from R code), and later what it takes to register an addin.
+More details on Shiny Gadgets are provided below, but first we'll take a look at using the [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package (which allows us to interact with RStudio from R code) and then what it takes to install and register an addin.
 
 ### RStudio API
 
@@ -166,7 +168,8 @@ If you want to create your own RStudio addins, all you need to do is:
 2. Create some R functions, and
 3. Create a file at `inst/rstudio/addins.dcf`,
 
-RStudio will automatically discover and register these addins when your package is installed.
+RStudio will automatically discover and register these addins when your package is installed. Note that you can register as many addins as you like within a single `addins.dcf` file, just be sure to insert a blank line between each addin that is registered.
+
 
 ### Execution Modes
 
