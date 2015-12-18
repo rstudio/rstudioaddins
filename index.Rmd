@@ -26,12 +26,16 @@ An addin can be as simple as a function that inserts a commonly used snippet of 
 
 <div class="col-xs-6">
 #### Interactively subset a dataset
-[![Subset Demo](demo/demo-subset.png)](demo/demo-subset.gif)
+<a href="demo/demo-subset.gif">
+<img src="demo/demo-subset.png" style="max-height: 250px;"/>
+</a>
 </div>
 
 <div class="col-xs-6">
 #### Interactively reformat R code
-[![Reformat Demo](demo/demo-reformat.png)](demo/demo-reformat.gif)
+<a href="demo/demo-reformat.gif">
+<img src="demo/demo-reformat.png" style="max-height: 250px;"/>
+</a>
 </div>
 
 </div>
