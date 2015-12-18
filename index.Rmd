@@ -22,9 +22,7 @@ RStudio addins provide a mechanism for executing R functions interactively from 
 
 An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!
 
----
-
-### Examples
+Here are two examples of addins in action (click on the thumbnail to see a brief demonstration):
 
 <div class="row">
 
@@ -43,8 +41,6 @@ An addin can be as simple as a function that inserts a commonly used snippet of 
 </div>
 
 </div>
-
----
 
 ## Using Addins
 
