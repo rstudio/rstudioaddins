@@ -164,6 +164,11 @@ h4 {
   height: 0px;
 }
 
+#release-note {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
 blockquote {
   font-size: 1em;
 }
@@ -181,7 +186,10 @@ blockquote {
 <div class="doc-header">
 RStudio Addins
 </div>
-<p>Addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <code>Addins</code> menu.</p>
+<div id="release-note">
+<p><strong>IMPORTANT NOTE:</strong> Support for addins is available only within the <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio (v0.99.825 or later). If you want to try out addins please be sure to download the preview release.</p>
+</div>
+<p>RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <code>Addins</code> menu.</p>
 <p>An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!</p>
 <hr />
 <div id="examples" class="section level3">
