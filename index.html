@@ -220,7 +220,7 @@ RStudio Addins
 devtools::install_github(&quot;rstudio/shiny&quot;)
 devtools::install_github(&quot;rstudio/shinygadgets&quot;)
 devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
-<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of <code>shiny</code> and <code>shinygadgets</code>, so please be sure to install those as well!</p>
+<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of <strong>shiny</strong> and <strong>shinygadgets</strong>, so please be sure to install those as well!</p>
 </div>
 <div id="executing-addins" class="section level3">
 <h3>Executing Addins</h3>
@@ -300,7 +300,7 @@ Set the contents of a document open in RStudio.
 <li><strong>Name</strong>: The name of the addin.</li>
 <li><strong>Description</strong>: A description of the addin.</li>
 <li><strong>Binding</strong>: The R function this addin is associated with.</li>
-<li><strong>Interactive</strong>: Whether this addin is interactive (e.g. as a Shiny application).</li>
+<li><strong>Interactive</strong>: Whether this addin is interactive (e.g. runs a Shiny application).</li>
 </ul>
 <p>For example:</p>
 <pre class="dcf"><code>Name: Insert %in%
@@ -315,17 +315,25 @@ Interactive: false</code></pre>
 </ol>
 <p>RStudio will automatically discover and register these addins when your package is installed.</p>
 </div>
-<div id="interactive-addins" class="section level3">
-<h3>Interactive Addins</h3>
-<p>It’s important to understand when an addin should be declared as interactive versus non-interactive, as this effects how RStudio will attempt to run the addin. In particular, non-interactive addins <strong>can not be interrupted</strong>, so it’s imperative that these addins should complete execution quickly. Otherwise, it’s possible that your addin could freeze the user’s R session, with no recourse for them to halt execution of your addin!</p>
+<div id="execution-modes" class="section level3">
+<h3>Execution Modes</h3>
+<p>The <code>Interactive</code> field within the addin registration describes whether the addin is interactive or non-interactive. It’s important to understand when an addin should be declared as interactive versus non-interactive, as this effects how RStudio will attempt to execute the addin:</p>
+<ul>
+<li><p>Interactive addins are invoked by emiting a call to their function directly into the R console. For addins that display user-interface (e.g. using a Shiny application) this enables users to stop/interrupt them.</p></li>
+<li><p>Non-interactive addins are run in the background and <strong>can not be interrupted</strong>, so it’s imperative that these addins complete execution quickly. Otherwise, it’s possible that your addin could freeze the user’s R session.</p></li>
+</ul>
+<p>The use case for non-interactive addins is typically simple text insertion or transformation, in which case users would be annoyed if each invocation resulted in code being inserted into the console.</p>
 </div>
-<div id="shiny-gadgets" class="section level3">
-<h3>Shiny Gadgets</h3>
-<p>Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. Let’s go through how you might create a Shiny gadget.</p>
-<p>Shiny gadgets are similar to regular Shiny applications. You will need to develop a <code>ui</code> and a <code>server</code> for your gadget, and then use the <code>runGadget()</code> function to launch your gadget.</p>
-<div id="ui" class="section level4">
-<h4>UI</h4>
-<p>The UI for a Shiny gadget can be generated using the <code>gadgetPage()</code> function. Typically, the UI definition of a Shiny gadget will have the following form:</p>
+</div>
+<div id="shiny-gadgets" class="section level2">
+<h2>Shiny Gadgets</h2>
+<p>Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny Gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. Let’s go through how you might create a Shiny gadget.</p>
+<p>Shiny Gadgets are similar to regular Shiny applications. You will need to develop a <code>ui</code> and a <code>server</code> for your gadget, and then use the <code>runGadget()</code> function to launch your gadget.</p>
+<p>Shiny Gadgets require development versions of the <strong>shiny</strong> and <strong>shinygadgets</strong> packages so you should be sure to install them before developing your addin. You can do this as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
+<div id="gadget-ui" class="section level3">
+<h3>Gadget UI</h3>
+<p>The UI for a Shiny Gadget can be generated using the <code>gadgetPage()</code> function. Typically, the UI definition of a Shiny Gadget will have the following form:</p>
 <pre class="r"><code>ui &lt;- gadgetPage(
   titlebar(&quot;My Gadget&quot;),
   contentPanel(
@@ -334,9 +342,9 @@ Interactive: false</code></pre>
 )</code></pre>
 <p>If you’re unfamiliar with how the UI for a Shiny application can be generated, please check out <a href="http://shiny.rstudio.com/tutorial/lesson2/">Shiny UI Lesson</a> to get further acquainted with how the UI for a Shiny application might be developed.</p>
 </div>
-<div id="server" class="section level4">
-<h4>Server</h4>
-<p>The server function used for a Shiny gadget is similar to one as provided for a regular Shiny application, except with the requirement that your application must respond to the <code>done</code> event. For example,</p>
+<div id="gadget-server" class="section level3">
+<h3>Gadget Server</h3>
+<p>The server function used for a Shiny Gadget is similar to one as provided for a regular Shiny application, except with the requirement that your application must respond to the <code>done</code> event. For example,</p>
 <pre class="r"><code>server &lt;- function(input, output, session) {
   
   ## Your reactive logic goes here.
@@ -355,22 +363,22 @@ Interactive: false</code></pre>
   })
 }</code></pre>
 </div>
-<div id="viewer" class="section level4">
-<h4>Viewer</h4>
+<div id="gadget-viewer" class="section level3">
+<h3>Gadget Viewer</h3>
 <p>After you’ve defined the ui and server for your Shiny gadget, you can choose what kind of viewer you would like your application to run in. Currently, there are three options available:</p>
 <ul>
-<li><p><strong>paneViewer()</strong>: Launch your Shiny gadget within the RStudio <strong>Viewer</strong> pane. This is useful for gadgets that want to run without obscuring other windows in the RStudio IDE, but such applications should require only a minimal amount of space (as the viewer may be small on the user’s computer).</p></li>
-<li><p><strong>dialogViewer()</strong>: Launch your Shiny gadget as a modal dialog within the RStudio IDE. Use this when your gadget requires a large amount of screen real estate, but is not heavy-weight enough to require a separate window.</p></li>
+<li><p><strong>paneViewer()</strong>: Launch your Shiny Gadget within the RStudio <strong>Viewer</strong> pane. This is useful for gadgets that want to run without obscuring other windows in the RStudio IDE, but such applications should require only a minimal amount of space (as the viewer may be small on the user’s computer).</p></li>
+<li><p><strong>dialogViewer()</strong>: Launch your Shiny Gadget as a modal dialog within the RStudio IDE. Use this when your gadget requires a large amount of screen real estate, but is not heavy-weight enough to require a separate window.</p></li>
 <li><p><strong>browserViewer()</strong>: Launch your Shiny gdaget in a separate window. Use this for large Shiny gadgets that require a large amount of real estate, and perhaps are more complex than applications that could fit comfortably within an RStudio modal dialog.</p></li>
 </ul>
 </div>
-<div id="putting-it-together" class="section level4">
-<h4>Putting It Together</h4>
+<div id="putting-it-together" class="section level3">
+<h3>Putting It Together</h3>
 <p>Let’s combine the above components into a simple ‘Hello Shiny’ gadget. We’ll create a clock that updates its display every second. Try running the following code in RStudio – you should see a clock displayed in the viewer pane. When you click <code>Done</code>, the current time will be inserted at the cursor position.</p>
 <pre class="r"><code>library(shiny)
 library(shinygadgets)
 
-# We&#39;ll wrap our Shiny gadget in an addin -- let&#39;s call it &#39;clockAddin()&#39;.
+# We&#39;ll wrap our Shiny Gadget in an addin -- let&#39;s call it &#39;clockAddin()&#39;.
 clockAddin &lt;- function() {
   
   # Our ui will be a simple gadget page, which simply displays the
@@ -435,10 +443,24 @@ clockAddin()
 # an R package, provide the registration metadata at 
 # &#39;inst/rstudio/addins.dcf&#39;, and you&#39;re ready to go!</code></pre>
 <p>Congratulations! You’re now ready to write your own Shiny gadgets.</p>
+</div>
+<div id="installation-1" class="section level3">
+<h3>Installation</h3>
+<p>Currently, running Shiny Gadgets requires that you install development versions of both the <strong>shiny</strong> and <strong>shinygadgets</strong> packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
+<p>Updated versions of the <strong>shiny</strong> and <strong>shinygadgets</strong> packages will be submited to CRAN soon, after which you’ll need only declare that your addin package depends on these updated versions.</p>
+</div>
+<div id="more-examples" class="section level3">
+<h3>More Examples</h3>
+<p>The <strong>addinexaples</strong> package contains several additional examples of Shiny Gadget based addins:</p>
+<ul>
+<li><p><a href="https://github.com/rstudio/addinexamples/blob/master/R/findAndReplaceAddin.R">Find and Replace</a> — Find and replace words in a document.</p></li>
+<li><p><a href="https://github.com/rstudio/addinexamples/blob/master/R/reformatAddin.R">Reformat R Code</a> — Reformat R code using <code>formatR::tidy_source()</code>.</p></li>
+<li><p><a href="https://github.com/rstudio/addinexamples/blob/master/R/subsetAddin.R">Subset a Data Frame</a> — Interactively subset a data frame.</p></li>
+</ul>
 <hr />
 <div class="doc-footer">
 <p>Questions? Comments? Suggestions? Please get in touch with us at the <a href="http://support.rstudio.com/">support forums</a></p>
-</div>
 </div>
 </div>
 </div>
