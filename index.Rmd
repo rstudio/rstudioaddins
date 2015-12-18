@@ -27,15 +27,15 @@ Here are two examples of addins in action (click on the thumbnail to see a brief
 <div class="row">
 
 <div class="col-xs-6">
-#### Interactively subset a dataset
-<a class="thumbnail" href="demo/demo-subset.gif" data-lightbox="examples" data-title="Interactively subset a dataset">
+#### Subset a dataset
+<a class="thumbnail" href="demo/demo-subset.gif" data-lightbox="examples" data-title="Subset a dataset">
 <img class="example-image" src="demo/demo-subset.png"/>
 </a>
 </div>
 
 <div class="col-xs-6">
-#### Interactively reformat R code
-<a class="thumbnail" href="demo/demo-reformat.gif" data-lightbox="examples" data-title="Interactively reformat R code">
+#### Reformat R code
+<a class="thumbnail" href="demo/demo-reformat.gif" data-lightbox="examples" data-title="Reformat R code">
 <img class="example-image" src="demo/demo-reformat.png"/>
 </a>
 </div>
