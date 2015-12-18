@@ -30,15 +30,15 @@ An addin can be as simple as a function that inserts a commonly used snippet of 
 
 <div class="col-xs-6">
 #### Interactively subset a dataset
-<a href="demo/demo-subset.gif" data-lightbox="examples" data-title="Interactively subset a dataset">
-<img src="demo/demo-subset.png" style="max-height: 250px;"/>
+<a class="thumbnail" href="demo/demo-subset.gif" data-lightbox="examples" data-title="Interactively subset a dataset">
+<img class="example-image" src="demo/demo-subset.png"/>
 </a>
 </div>
 
 <div class="col-xs-6">
 #### Interactively reformat R code
-<a href="demo/demo-reformat.gif" data-lightbox="examples" data-title="Interactively reformat R code">
-<img src="demo/demo-reformat.png" style="max-height: 250px;"/>
+<a class="thumbnail" href="demo/demo-reformat.gif" data-lightbox="examples" data-title="Interactively reformat R code">
+<img class="example-image" src="demo/demo-reformat.png"/>
 </a>
 </div>
 
