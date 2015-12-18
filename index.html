@@ -20,9 +20,10 @@
 <script src="index_files/bootstrap-3.3.1/shim/respond.min.js"></script>
 
 <link href="libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet">
-
 <script src="libs/tocify-1.9.1/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="libs/tocify-1.9.1/jquery.tocify.min.js"></script>
+
+<link href="libs/lightbox-2.8.2/css/lightbox.min.css" rel="stylesheet">
 
 <style type="text/css">
 @media (max-width: 992px) {
@@ -197,11 +198,11 @@ RStudio Addins
 <div class="row">
 <div class="col-xs-6">
 <h4 id="interactively-subset-a-dataset">Interactively subset a dataset</h4>
-<p><a href="demo/demo-subset.gif"> <img src="demo/demo-subset.png" style="max-height: 250px;"/> </a></p>
+<p><a href="demo/demo-subset.gif" data-lightbox="examples" data-title="Interactively subset a dataset"> <img src="demo/demo-subset.png" style="max-height: 250px;"/> </a></p>
 </div>
 <div class="col-xs-6">
 <h4 id="interactively-reformat-r-code">Interactively reformat R code</h4>
-<p><a href="demo/demo-reformat.gif"> <img src="demo/demo-reformat.png" style="max-height: 250px;"/> </a></p>
+<p><a href="demo/demo-reformat.gif" data-lightbox="examples" data-title="Interactively reformat R code"> <img src="demo/demo-reformat.png" style="max-height: 250px;"/> </a></p>
 </div>
 </div>
 <hr />
@@ -469,6 +470,17 @@ clockAddin()
 
 </div> <!--span-9-->
 </div> <!--row-fluid-->
+
+<script src="libs/lightbox-2.8.2/js/lightbox.min.js"></script>
+
+<script>
+    lightbox.option({
+      'albumLabel': 'Example %1 of %2',
+      'resizeDuration': 200,
+      'fadeDuration': 200,
+      'wrapAround': true
+    })
+</script>
 
 <style type="text/css">
 .main-container {
