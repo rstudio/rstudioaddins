@@ -53,15 +53,13 @@ RStudio Addins are distributed through [R packages](http://r-pkgs.had.co.nz/). O
 Let's start by playing around with a couple of the example addins provided by the [addinexamples](https://github.com/rstudio/addinexamples) package. Within RStudio, install this package (plus its requisite dependencies) with:
 
 ```{r, eval=FALSE}
-if (!requireNamespace("devtools", quietly = TRUE))
-  install.packages("devtools")
-
+devtools::install_github("rstudio/htmltools")
 devtools::install_github("rstudio/shiny")
 devtools::install_github("rstudio/shinygadgets")
 devtools::install_github("rstudio/addinexamples")
 ```
 
-Note that for the time being the **addinexamples** package requires development versions of **shiny** and **shinygadgets**, so please be sure to install those as well!
+Note that for the time being the **addinexamples** package requires development versions of the **htmltools**, **shiny**, and **shinygadgets** packages, so please be sure to install those as well!
 
 ### Running Addins
 
@@ -183,10 +181,10 @@ Shiny gadgets are Shiny applications which can be registered and run as addins. 
 
 Shiny Gadgets are similar to regular Shiny applications. You will need to develop a `ui` and a `server` for your gadget, and then use the `runGadget()` function to launch your gadget.
 
-Shiny Gadgets require development versions of the **shiny** and **shinygadgets** packages so you should be sure to install them before developing your addin. You can do this as follows:
+Shiny Gadgets require development versions of the **htmltools**, **shiny**, and **shinygadgets** packages so you should be sure to install them before developing your addin. You can do this as follows:
 
 ```{r, eval=FALSE}
-devtools::install_github(c("rstudio/shiny", "rstudio/shinygadgets"))
+devtools::install_github(c("rstudio/htmltools", "rstudio/shiny", "rstudio/shinygadgets"))
 ```
 
 
@@ -319,13 +317,13 @@ Congratulations! You're now ready to write your own Shiny gadgets.
 
 ### Installation
 
-Currently, running Shiny Gadgets requires that you install development versions of both the [**shiny**](https://github.com/rstudio/shiny) and [**shinygadgets**](https://github.com/rstudio/shinygadgets) packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:
+Currently, running Shiny Gadgets requires that you install development versions of the [**htmltools**](https://github.com/rstudio/htmltools), [**shiny**](https://github.com/rstudio/shiny) and [**shinygadgets**](https://github.com/rstudio/shinygadgets) packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:
 
 ```{r, eval=FALSE}
-devtools::install_github(c("rstudio/shiny", "rstudio/shinygadgets"))
+devtools::install_github(c("rstudio/htmltools", "rstudio/shiny", "rstudio/shinygadgets"))
 ```
 
-Updated versions of the **shiny** and **shinygadgets** packages will be submitted to CRAN soon, after which you'll need only declare that your addin package depends on these updated versions.
+Updated versions of the **htmltools**, **shiny**, and **shinygadgets** packages will be submited to CRAN soon, after which you'll need only declare that your addin package depends on these updated versions.
 
 ### More Examples
 
@@ -336,7 +334,6 @@ The **addinexaples** package contains several additional examples of Shiny Gadge
 - [Reformat R Code](https://github.com/rstudio/addinexamples/blob/master/R/reformatAddin.R) --- Reformat R code using `formatR::tidy_source()`.
 
 - [Subset a Data Frame](https://github.com/rstudio/addinexamples/blob/master/R/subsetAddin.R) --- Interactively subset a data frame.
-
 
 
 <hr />

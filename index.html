@@ -216,13 +216,11 @@ RStudio Addins
 <h3>Installation</h3>
 <p>RStudio Addins are distributed through <a href="http://r-pkgs.had.co.nz/">R packages</a>. Once you’ve installed an R package that contains addins, they’ll be immediately become available within RStudio.</p>
 <p>Let’s start by playing around with a couple of the example addins provided by the <a href="https://github.com/rstudio/addinexamples">addinexamples</a> package. Within RStudio, install this package (plus its requisite dependencies) with:</p>
-<pre class="r"><code>if (!requireNamespace(&quot;devtools&quot;, quietly = TRUE))
-  install.packages(&quot;devtools&quot;)
-
+<pre class="r"><code>devtools::install_github(&quot;rstudio/htmltools&quot;)
 devtools::install_github(&quot;rstudio/shiny&quot;)
 devtools::install_github(&quot;rstudio/shinygadgets&quot;)
 devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
-<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of <strong>shiny</strong> and <strong>shinygadgets</strong>, so please be sure to install those as well!</p>
+<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>shinygadgets</strong> packages, so please be sure to install those as well!</p>
 </div>
 <div id="running-addins" class="section level3">
 <h3>Running Addins</h3>
@@ -263,7 +261,7 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 <table class="table table-striped table-bordered table-hover">
 <tr>
 <td class="text-nowrap">
-<strong>GetActiveDocumentContext()</strong>
+<strong>getActiveDocumentContext()</strong>
 </td>
 <td>
 Returns information about the currently active RStudio document. See below for more details.
@@ -332,8 +330,8 @@ Interactive: false</code></pre>
 <h2>Shiny Gadgets</h2>
 <p>Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny Gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. Let’s go through how you might create a Shiny gadget.</p>
 <p>Shiny Gadgets are similar to regular Shiny applications. You will need to develop a <code>ui</code> and a <code>server</code> for your gadget, and then use the <code>runGadget()</code> function to launch your gadget.</p>
-<p>Shiny Gadgets require development versions of the <strong>shiny</strong> and <strong>shinygadgets</strong> packages so you should be sure to install them before developing your addin. You can do this as follows:</p>
-<pre class="r"><code>devtools::install_github(c(&quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
+<p>Shiny Gadgets require development versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>shinygadgets</strong> packages so you should be sure to install them before developing your addin. You can do this as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/htmltools&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
 <div id="gadget-ui" class="section level3">
 <h3>Gadget UI</h3>
 <p>The UI for a Shiny Gadget can be generated using the <code>gadgetPage()</code> function. Typically, the UI definition of a Shiny Gadget will have the following form:</p>
@@ -450,9 +448,9 @@ clockAddin()
 </div>
 <div id="installation-1" class="section level3">
 <h3>Installation</h3>
-<p>Currently, running Shiny Gadgets requires that you install development versions of both the <a href="https://github.com/rstudio/shiny"><strong>shiny</strong></a> and <a href="https://github.com/rstudio/shinygadgets"><strong>shinygadgets</strong></a> packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:</p>
-<pre class="r"><code>devtools::install_github(c(&quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
-<p>Updated versions of the <strong>shiny</strong> and <strong>shinygadgets</strong> packages will be submitted to CRAN soon, after which you’ll need only declare that your addin package depends on these updated versions.</p>
+<p>Currently, running Shiny Gadgets requires that you install development versions of the <a href="https://github.com/rstudio/htmltools"><strong>htmltools</strong></a>, <a href="https://github.com/rstudio/shiny"><strong>shiny</strong></a> and <a href="https://github.com/rstudio/shinygadgets"><strong>shinygadgets</strong></a> packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/htmltools&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
+<p>Updated versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>shinygadgets</strong> packages will be submited to CRAN soon, after which you’ll need only declare that your addin package depends on these updated versions.</p>
 </div>
 <div id="more-examples" class="section level3">
 <h3>More Examples</h3>
