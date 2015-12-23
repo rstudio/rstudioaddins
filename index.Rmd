@@ -115,7 +115,7 @@ The [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) pa
 
 <table class="table table-striped table-bordered table-hover">
 <tr>
-<td class="text-nowrap">**GetActiveDocumentContext()**</td>
+<td class="text-nowrap">**getActiveDocumentContext()**</td>
 <td>Returns information about the currently active RStudio document. See below for more details.</td>
 </tr>
 <tr>
