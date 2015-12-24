@@ -55,11 +55,11 @@ Let's start by playing around with a couple of the example addins provided by th
 ```{r, eval=FALSE}
 devtools::install_github("rstudio/htmltools")
 devtools::install_github("rstudio/shiny")
-devtools::install_github("rstudio/shinygadgets")
+devtools::install_github("rstudio/miniUI")
 devtools::install_github("rstudio/addinexamples")
 ```
 
-Note that for the time being the **addinexamples** package requires development versions of the **htmltools**, **shiny**, and **shinygadgets** packages, so please be sure to install those as well!
+Note that for the time being the **addinexamples** package requires development versions of the **htmltools**, **shiny**, and **miniUI** packages, so please be sure to install those as well!
 
 ### Running Addins
 
@@ -181,21 +181,24 @@ Shiny gadgets are Shiny applications which can be registered and run as addins. 
 
 Shiny Gadgets are similar to regular Shiny applications. You will need to develop a `ui` and a `server` for your gadget, and then use the `runGadget()` function to launch your gadget.
 
-Shiny Gadgets require development versions of the **htmltools**, **shiny**, and **shinygadgets** packages so you should be sure to install them before developing your addin. You can do this as follows:
+Shiny Gadgets require development versions of the **htmltools**, **shiny**, and **miniUI** packages so you should be sure to install them before developing your addin. You can do this as follows:
 
 ```{r, eval=FALSE}
-devtools::install_github(c("rstudio/htmltools", "rstudio/shiny", "rstudio/shinygadgets"))
+devtools::install_github(c("rstudio/htmltools", "rstudio/shiny", "rstudio/miniUI"))
 ```
 
 
 ### Gadget UI
 
-The UI for a Shiny Gadget can be generated using the `gadgetPage()` function. Typically, the UI definition of a Shiny Gadget will have the following form:
+The UI for a Shiny Gadget can be generated using functions from the miniUI package. Typically, the UI definition of a Shiny Gadget will have the following form:
 
 ```{r, eval=FALSE}
-ui <- gadgetPage(
-  titlebar("My Gadget"),
-  contentPanel(
+library(shiny)
+library(miniUI)
+
+ui <- miniPage(
+  miniTitleBar("My Gadget"),
+  miniContentPanel(
     ## Your UI items go here.
   )
 )
@@ -243,7 +246,7 @@ Let's combine the above components into a simple 'Hello Shiny' gadget. We'll cre
 
 ```{r, eval=FALSE}
 library(shiny)
-library(shinygadgets)
+library(miniUI)
 
 # We'll wrap our Shiny Gadget in an addin.
 # Let's call it 'clockAddin()'.
@@ -251,9 +254,9 @@ clockAddin <- function() {
   
   # Our ui will be a simple gadget page, which
   # simply displays the time in a 'UI' output.
-  ui <- gadgetPage(
-    titlebar("Clock"),
-    contentPanel(
+  ui <- miniPage(
+    miniTitleBar("Clock"),
+    miniContentPanel(
       uiOutput("time")
     )
   )
@@ -317,17 +320,17 @@ Congratulations! You're now ready to write your own Shiny gadgets.
 
 ### Installation
 
-Currently, running Shiny Gadgets requires that you install development versions of the [**htmltools**](https://github.com/rstudio/htmltools), [**shiny**](https://github.com/rstudio/shiny) and [**shinygadgets**](https://github.com/rstudio/shinygadgets) packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:
+Currently, running Shiny Gadgets requires that you install development versions of the [**htmltools**](https://github.com/rstudio/htmltools), [**shiny**](https://github.com/rstudio/shiny), and [**miniUI**](https://github.com/rstudio/miniUI) packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:
 
 ```{r, eval=FALSE}
-devtools::install_github(c("rstudio/htmltools", "rstudio/shiny", "rstudio/shinygadgets"))
+devtools::install_github(c("rstudio/htmltools", "rstudio/shiny", "rstudio/miniUI"))
 ```
 
-Updated versions of the **htmltools**, **shiny**, and **shinygadgets** packages will be submited to CRAN soon, after which you'll need only declare that your addin package depends on these updated versions.
+Updated versions of these packages will be submitted to CRAN soon, after which you'll need only declare that your addin package depends on these updated versions.
 
 ### More Examples
 
-The **addinexaples** package contains several additional examples of Shiny Gadget based addins:
+The **addinexamples** package contains several additional examples of Shiny Gadget based addins:
 
 - [Find and Replace](https://github.com/rstudio/addinexamples/blob/master/R/findAndReplaceAddin.R) --- Find and replace words in a document.
 
