@@ -194,7 +194,7 @@ The UI for a Shiny Gadget can be generated using the `gadgetPage()` function. Ty
 
 ```{r, eval=FALSE}
 ui <- gadgetPage(
-  titlebar("My Gadget"),
+  gadgetTitleBar("My Gadget"),
   contentPanel(
     ## Your UI items go here.
   )
