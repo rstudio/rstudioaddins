@@ -218,9 +218,9 @@ RStudio Addins
 <p>Let’s start by playing around with a couple of the example addins provided by the <a href="https://github.com/rstudio/addinexamples">addinexamples</a> package. Within RStudio, install this package (plus its requisite dependencies) with:</p>
 <pre class="r"><code>devtools::install_github(&quot;rstudio/htmltools&quot;)
 devtools::install_github(&quot;rstudio/shiny&quot;)
-devtools::install_github(&quot;rstudio/shinygadgets&quot;)
+devtools::install_github(&quot;rstudio/miniUI&quot;)
 devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
-<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>shinygadgets</strong> packages, so please be sure to install those as well!</p>
+<p>Note that for the time being the <strong>addinexamples</strong> package requires development versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>miniUI</strong> packages, so please be sure to install those as well!</p>
 </div>
 <div id="running-addins" class="section level3">
 <h3>Running Addins</h3>
@@ -330,14 +330,17 @@ Interactive: false</code></pre>
 <h2>Shiny Gadgets</h2>
 <p>Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny Gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. Let’s go through how you might create a Shiny gadget.</p>
 <p>Shiny Gadgets are similar to regular Shiny applications. You will need to develop a <code>ui</code> and a <code>server</code> for your gadget, and then use the <code>runGadget()</code> function to launch your gadget.</p>
-<p>Shiny Gadgets require development versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>shinygadgets</strong> packages so you should be sure to install them before developing your addin. You can do this as follows:</p>
-<pre class="r"><code>devtools::install_github(c(&quot;rstudio/htmltools&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
+<p>Shiny Gadgets require development versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>miniUI</strong> packages so you should be sure to install them before developing your addin. You can do this as follows:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/htmltools&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/miniUI&quot;))</code></pre>
 <div id="gadget-ui" class="section level3">
 <h3>Gadget UI</h3>
-<p>The UI for a Shiny Gadget can be generated using the <code>gadgetPage()</code> function. Typically, the UI definition of a Shiny Gadget will have the following form:</p>
-<pre class="r"><code>ui &lt;- gadgetPage(
+<p>The UI for a Shiny Gadget can be generated using functions from the miniUI package. Typically, the UI definition of a Shiny Gadget will have the following form:</p>
+<pre class="r"><code>library(shiny)
+library(miniUI)
+
+ui &lt;- miniPage(
   gadgetTitleBar(&quot;My Gadget&quot;),
-  contentPanel(
+  miniContentPanel(
     ## Your UI items go here.
   )
 )</code></pre>
@@ -377,7 +380,7 @@ Interactive: false</code></pre>
 <h3>Putting It Together</h3>
 <p>Let’s combine the above components into a simple ‘Hello Shiny’ gadget. We’ll create a clock that updates its display every second. Try running the following code in RStudio – you should see a clock displayed in the viewer pane. When you click <code>Done</code>, the current time will be inserted at the cursor position.</p>
 <pre class="r"><code>library(shiny)
-library(shinygadgets)
+library(miniUI)
 
 # We&#39;ll wrap our Shiny Gadget in an addin.
 # Let&#39;s call it &#39;clockAddin()&#39;.
@@ -385,9 +388,9 @@ clockAddin &lt;- function() {
   
   # Our ui will be a simple gadget page, which
   # simply displays the time in a &#39;UI&#39; output.
-  ui &lt;- gadgetPage(
-    titlebar(&quot;Clock&quot;),
-    contentPanel(
+  ui &lt;- miniPage(
+    gadgetTitleBar(&quot;Clock&quot;),
+    miniContentPanel(
       uiOutput(&quot;time&quot;)
     )
   )
@@ -448,13 +451,13 @@ clockAddin()
 </div>
 <div id="installation-1" class="section level3">
 <h3>Installation</h3>
-<p>Currently, running Shiny Gadgets requires that you install development versions of the <a href="https://github.com/rstudio/htmltools"><strong>htmltools</strong></a>, <a href="https://github.com/rstudio/shiny"><strong>shiny</strong></a> and <a href="https://github.com/rstudio/shinygadgets"><strong>shinygadgets</strong></a> packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:</p>
-<pre class="r"><code>devtools::install_github(c(&quot;rstudio/htmltools&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/shinygadgets&quot;))</code></pre>
-<p>Updated versions of the <strong>htmltools</strong>, <strong>shiny</strong>, and <strong>shinygadgets</strong> packages will be submited to CRAN soon, after which you’ll need only declare that your addin package depends on these updated versions.</p>
+<p>Currently, running Shiny Gadgets requires that you install development versions of the <a href="https://github.com/rstudio/htmltools"><strong>htmltools</strong></a>, <a href="https://github.com/rstudio/shiny"><strong>shiny</strong></a>, and <a href="https://github.com/rstudio/miniUI"><strong>miniUI</strong></a> packages. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:</p>
+<pre class="r"><code>devtools::install_github(c(&quot;rstudio/htmltools&quot;, &quot;rstudio/shiny&quot;, &quot;rstudio/miniUI&quot;))</code></pre>
+<p>Updated versions of these packages will be submitted to CRAN soon, after which you’ll need only declare that your addin package depends on these updated versions.</p>
 </div>
 <div id="more-examples" class="section level3">
 <h3>More Examples</h3>
-<p>The <strong>addinexaples</strong> package contains several additional examples of Shiny Gadget based addins:</p>
+<p>The <strong>addinexamples</strong> package contains several additional examples of Shiny Gadget based addins:</p>
 <ul>
 <li><p><a href="https://github.com/rstudio/addinexamples/blob/master/R/findAndReplaceAddin.R">Find and Replace</a> — Find and replace words in a document.</p></li>
 <li><p><a href="https://github.com/rstudio/addinexamples/blob/master/R/reformatAddin.R">Reformat R Code</a> — Reformat R code using <code>formatR::tidy_source()</code>.</p></li>
