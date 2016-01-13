@@ -327,7 +327,11 @@ Interactive: false</code></pre>
 </div>
 <div id="shiny-gadgets" class="section level2">
 <h2>Shiny Gadgets</h2>
-<p>Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny Gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. Let’s go through how you might create a Shiny gadget.</p>
+<p>Shiny gadgets are Shiny applications which can be registered and run as addins. Typically, a Shiny Gadget provides a mechanism for interactively generating code, or modifying a document, but within this realm the possibilities are endless. This article demonstrates how you might create a simple Shiny Gadget, for more complete documentation see the following articles on the Shiny Developer Center:</p>
+<ul>
+<li><a href="http://shiny.rstudio.com/articles/gadgets.html">Shiny Gadgets</a></li>
+<li><a href="http://shiny.rstudio.com/articles/gadget-ui.html">Designing Gadget UI</a></li>
+</ul>
 <p>Shiny Gadgets are similar to regular Shiny applications. You will need to develop a <code>ui</code> and a <code>server</code> for your gadget, and then use the <code>runGadget()</code> function to launch your gadget.</p>
 <p>Shiny Gadgets requires the very latest version of <strong>shiny</strong> (v0.13) from CRAN as well as the development version of the <strong>miniUI</strong> package so you should be sure to install them before developing your addin. You can do this as follows:</p>
 <pre class="r"><code>install.packages(&quot;shiny&quot;, type = &quot;source&quot;)
@@ -447,7 +451,11 @@ clockAddin()
 # Now all that&#39;s left is sharing this addin -- put this function
 # in an R package, provide the registration metadata at
 # &#39;inst/rstudio/addins.dcf&#39;, and you&#39;re ready to go!</code></pre>
-<p>Congratulations! You’re now ready to write your own Shiny gadgets.</p>
+<p>Congratulations! You’re now ready to write your own Shiny gadgets. Additional documentation on creating Gadgets is available at the Shiny Developer Center:</p>
+<ul>
+<li><a href="http://shiny.rstudio.com/articles/gadgets.html">Shiny Gadgets</a></li>
+<li><a href="http://shiny.rstudio.com/articles/gadget-ui.html">Designing Gadget UI</a></li>
+</ul>
 </div>
 <div id="installation-1" class="section level3">
 <h3>Installation</h3>
