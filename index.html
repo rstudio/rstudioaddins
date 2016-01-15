@@ -193,7 +193,7 @@ blockquote {
 RStudio Addins
 </div>
 <div id="release-note">
-<p><strong>IMPORTANT NOTE:</strong> Support for addins is available only within the <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio (v0.99.825 or later). If you want to try out addins please be sure to download the preview release.</p>
+<p><strong>IMPORTANT NOTE:</strong> Support for addins is available only within the <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio (v0.99.857 or later). If you want to try out addins please be sure to download the preview release.</p>
 </div>
 <p>RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <em>Addins</em> menu.</p>
 <p>An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!</p>
@@ -216,10 +216,7 @@ RStudio Addins
 <h3>Installation</h3>
 <p>RStudio Addins are distributed through <a href="http://r-pkgs.had.co.nz/">R packages</a>. Once you’ve installed an R package that contains addins, they’ll be immediately become available within RStudio.</p>
 <p>Let’s start by playing around with a couple of the example addins provided by the <a href="https://github.com/rstudio/addinexamples">addinexamples</a> package. Within RStudio, install this package (plus its requisite dependencies) with:</p>
-<pre class="r"><code>install.packages(&quot;shiny&quot;, type = &quot;source&quot;)
-devtools::install_github(&quot;rstudio/miniUI&quot;)
-devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
-<p>Note that the <strong>addinexamples</strong> package requires the very latest version of <strong>shiny</strong> (v0.13) from CRAN as well as the development versions of <strong>miniUI</strong> package, so please be sure to install those as well!</p>
+<pre class="r"><code>devtools::install_github(&quot;rstudio/addinexamples&quot;, type = &quot;source&quot;)</code></pre>
 </div>
 <div id="running-addins" class="section level3">
 <h3>Running Addins</h3>
@@ -256,7 +253,9 @@ devtools::install_github(&quot;rstudio/addinexamples&quot;)</code></pre>
 </div>
 <div id="rstudio-api" class="section level3">
 <h3>RStudio API</h3>
-<p>The <a href="https://cran.rstudio.com/web/packages/rstudioapi/index.html">rstudioapi</a> package allows you to interact with RStudio directly from the R code you write. For addins in particular, a number of methods were added that allow R code to introspect and mutate the contents of a document open in RStudio. These methods are outlined below briefly, but see documentation within the <a href="https://cran.rstudio.com/web/packages/rstudioapi/index.html">rstudioapi</a> package for more details.</p>
+<p>The <a href="https://cran.rstudio.com/web/packages/rstudioapi/index.html">rstudioapi</a> package allows you to interact with RStudio directly from the R code you write. You should install a recent (&gt;= v0.4) version of the <strong>rstudioapi</strong> package to ensure you have access to all of the functions described below:</p>
+<pre class="r"><code>install.packages(&quot;rstudioapi&quot;, type = &quot;source&quot;)</code></pre>
+<p>For addins in particular, a number of methods were added that allow R code to introspect and mutate the contents of a document open in RStudio. These methods are outlined below briefly, but see documentation within the <a href="https://cran.rstudio.com/web/packages/rstudioapi/index.html">rstudioapi</a> package for more details.</p>
 <table class="table table-striped table-bordered table-hover">
 <tr>
 <td class="text-nowrap">
@@ -333,16 +332,12 @@ Interactive: false</code></pre>
 <li><a href="http://shiny.rstudio.com/articles/gadget-ui.html">Designing Gadget UI</a></li>
 </ul>
 <p>Shiny Gadgets are similar to regular Shiny applications. You will need to develop a <code>ui</code> and a <code>server</code> for your gadget, and then use the <code>runGadget()</code> function to launch your gadget.</p>
-<p>Shiny Gadgets requires the very latest version of <strong>shiny</strong> (v0.13) from CRAN as well as the development version of the <strong>miniUI</strong> package so you should be sure to install them before developing your addin. You can do this as follows:</p>
-<pre class="r"><code>install.packages(&quot;shiny&quot;, type = &quot;source&quot;)
-devtools::install_github(&quot;rstudio/miniUI&quot;)</code></pre>
+<p>Shiny Gadgets require recent versions of the <strong>shiny</strong> (v0.13) and <strong>miniUI</strong> (v0.1.1) packages from CRAN so you should be sure to install them before developing your addin. You can do this as follows:</p>
+<pre class="r"><code>install.packages(c(&quot;shiny&quot;, &quot;miniUI&quot;), type = &quot;source&quot;)</code></pre>
 <div id="gadget-ui" class="section level3">
 <h3>Gadget UI</h3>
 <p>The UI for a Shiny Gadget can be generated using functions from the miniUI package. Typically, the UI definition of a Shiny Gadget will have the following form:</p>
-<pre class="r"><code>library(shiny)
-library(miniUI)
-
-ui &lt;- miniPage(
+<pre class="r"><code>ui &lt;- miniPage(
   gadgetTitleBar(&quot;My Gadget&quot;),
   miniContentPanel(
     ## Your UI items go here.
@@ -459,9 +454,11 @@ clockAddin()
 </div>
 <div id="installation-1" class="section level3">
 <h3>Installation</h3>
-<p>Currently, running Shiny Gadgets requires that you install the latest version <a href="https://github.com/rstudio/shiny"><strong>shiny</strong></a> (v0.13) from CRAN as well as the development version of the <a href="https://github.com/rstudio/miniUI"><strong>miniUI</strong></a> package. Therefore, if you are distributing a Shiny Gadget based addin then users of your addin will also need to install the following packages in addition to the one that hosts your addin:</p>
-<pre class="r"><code>install.packages(&quot;shiny&quot;, type = &quot;source&quot;)
-devtools::install_github(&quot;rstudio/miniUI&quot;)</code></pre>
+<p>Creating addins with Shiny Gadgets requires recent versions of the <strong>shiny</strong> (v0.13), <strong>miniUI</strong> (v0.1.1), and <strong>rstudioapi</strong> (v0.4) packages from CRAN. You should therefore add these packages (along with their required versions) to your package DESCRIPTION file as follows:</p>
+<pre class="ini"><code>Imports:
+  shiny (&gt;= 0.13),
+  miniUI (&gt;= 0.1.1),
+  rstudioapi (&gt;= 0.4)</code></pre>
 </div>
 <div id="more-examples" class="section level3">
 <h3>More Examples</h3>
