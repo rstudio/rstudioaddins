@@ -104,7 +104,7 @@ More details on Shiny Gadgets are provided below, but first we'll take a look at
 
 ### RStudio API
 
-The [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package allows you to interact with RStudio directly from the R code you write. You should install a recent (>= v0.4) version of the **rstudioapi** package to ensure you have access to all of the functions described below:
+The [rstudioapi](https://cran.rstudio.com/web/packages/rstudioapi/index.html) package allows you to interact with RStudio directly from the R code you write. You should install a recent (>= v0.5) version of the **rstudioapi** package to ensure you have access to all of the functions described below:
 
 ```{r, eval=FALSE}
 install.packages("rstudioapi", type = "source")
@@ -323,13 +323,13 @@ Congratulations! You're now ready to write your own Shiny gadgets. Additional do
 
 ### Installation
 
-Creating addins with Shiny Gadgets requires recent versions of the **shiny** (v0.13), **miniUI** (v0.1.1), and **rstudioapi** (v0.4) packages from CRAN. You should therefore add these packages (along with their required versions) to your package DESCRIPTION file as follows:
+Creating addins with Shiny Gadgets requires recent versions of the **shiny** (v0.13), **miniUI** (v0.1.1), and **rstudioapi** (v0.5) packages from CRAN. You should therefore add these packages (along with their required versions) to your package DESCRIPTION file as follows:
 
 ```ini
 Imports:
   shiny (>= 0.13),
   miniUI (>= 0.1.1),
-  rstudioapi (>= 0.4)
+  rstudioapi (>= 0.5)
 ```
 
 ### More Examples
