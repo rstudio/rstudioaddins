@@ -15,7 +15,7 @@ output:
 <div class="doc-header">RStudio Addins</div>
 
 <div id="release-note">
-**IMPORTANT NOTE:** Support for addins is available only within the [Preview Release](https://www.rstudio.com/products/rstudio/download/preview/) of RStudio (v0.99.857 or later). If you want to try out addins please be sure to download the preview release.
+**IMPORTANT NOTE:** Support for addins is available only within the [most recent release](https://www.rstudio.com/products/rstudio/download/) of RStudio (v0.99.878 or later). If you want to try out addins please be sure to download this release.
 </div>
 
 RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE---either through keyboard shortcuts, or through the *Addins* menu.
@@ -48,7 +48,7 @@ This guide will walk you through the basics of installing addins, binding keyboa
 
 ### Installation
 
-RStudio Addins are distributed through [R packages](http://r-pkgs.had.co.nz/). Once you've installed an R package that contains addins, they'll be immediately become available within RStudio.
+RStudio Addins are distributed as [R packages](http://r-pkgs.had.co.nz/). Once you've installed an R package that contains addins, they'll be immediately become available within RStudio.
 
 Let's start by playing around with a couple of the example addins provided by the [addinexamples](https://github.com/rstudio/addinexamples) package. Within RStudio, install this package (plus its requisite dependencies) with:
 

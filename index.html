@@ -56,6 +56,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 
 
 
+
 </head>
 
 <body>
@@ -74,8 +75,49 @@ img {
   max-width:100%;
   height: auto;
 }
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
 </style>
+
+
 <div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script src="index_files/navigation/tabsets.js"></script>
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
 
 
 
@@ -188,6 +230,11 @@ blockquote {
 
 </style>
 
+<div class="fluid-row" id="header">
+
+
+
+</div>
 
 
 <div id="overview" class="section level2">
@@ -196,7 +243,7 @@ blockquote {
 RStudio Addins
 </div>
 <div id="release-note">
-<p><strong>IMPORTANT NOTE:</strong> Support for addins is available only within the <a href="https://www.rstudio.com/products/rstudio/download/preview/">Preview Release</a> of RStudio (v0.99.857 or later). If you want to try out addins please be sure to download the preview release.</p>
+<p><strong>IMPORTANT NOTE:</strong> Support for addins is available only within the <a href="https://www.rstudio.com/products/rstudio/download/">most recent release</a> of RStudio (v0.99.878 or later). If you want to try out addins please be sure to download this release.</p>
 </div>
 <p>RStudio addins provide a mechanism for executing R functions interactively from within the RStudio IDE—either through keyboard shortcuts, or through the <em>Addins</em> menu.</p>
 <p>An addin can be as simple as a function that inserts a commonly used snippet of text, and as complex as a Shiny application that accepts input from the user, and later mutates a document open in RStudio. The sky is limit!</p>
@@ -217,7 +264,7 @@ RStudio Addins
 <p>This guide will walk you through the basics of installing addins, binding keyboard shorcuts to them, and finally developing your own addins.</p>
 <div id="installation" class="section level3">
 <h3>Installation</h3>
-<p>RStudio Addins are distributed through <a href="http://r-pkgs.had.co.nz/">R packages</a>. Once you’ve installed an R package that contains addins, they’ll be immediately become available within RStudio.</p>
+<p>RStudio Addins are distributed as <a href="http://r-pkgs.had.co.nz/">R packages</a>. Once you’ve installed an R package that contains addins, they’ll be immediately become available within RStudio.</p>
 <p>Let’s start by playing around with a couple of the example addins provided by the <a href="https://github.com/rstudio/addinexamples">addinexamples</a> package. Within RStudio, install this package (plus its requisite dependencies) with:</p>
 <pre class="r"><code>devtools::install_github(&quot;rstudio/addinexamples&quot;, type = &quot;source&quot;)</code></pre>
 </div>
