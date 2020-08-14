@@ -205,7 +205,7 @@ ui <- miniPage(
 )
 ```
 
-If you're unfamiliar with how the UI for a Shiny application can be generated, please check out [Shiny UI Lesson](http://shiny.rstudio.com/tutorial/lesson2/) to get further acquainted with how the UI for a Shiny application might be developed.
+If you're unfamiliar with how the UI for a Shiny application can be generated, please check out [Shiny UI Lesson](https://shiny.rstudio.com/tutorial/written-tutorial/lesson2/) to get further acquainted with how the UI for a Shiny application might be developed.
 
 ### Gadget Server
 
